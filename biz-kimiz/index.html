@@ -26,9 +26,9 @@
             max-width: 800px;
             width: 100%;
             border: 1px solid #ff0000;
-            padding: 30px;
+            padding: 35px;
             background-color: #050505;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
         }
 
         h1 {
@@ -41,28 +41,44 @@
             letter-spacing: 2px;
         }
 
+        .manifesto-box {
+            border-left: 3px solid #ff0000;
+            padding-left: 15px;
+            margin-bottom: 25px;
+            background-color: rgba(255, 0, 0, 0.05);
+            padding: 15px;
+        }
+
         p {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             line-height: 1.8;
-            color: #cc0000;
-            margin-bottom: 20px;
+            color: #dd0000;
+            margin-bottom: 15px;
             text-shadow: 0 0 3px #550000;
+        }
+
+        .highlight-text {
+            color: #ffffff;
+            font-weight: bold;
+            background-color: rgba(255, 0, 0, 0.2);
+            padding: 2px 6px;
         }
 
         .back-link {
             display: inline-block;
-            margin-top: 20px;
+            margin-top: 25px;
             color: #ff0000;
             text-decoration: none;
             border: 1px solid #ff0000;
-            padding: 8px 15px;
+            padding: 8px 16px;
             font-weight: bold;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
 
         .back-link:hover {
             background-color: #ff0000;
             color: #000000;
+            box-shadow: 0 0 10px #ff0000;
         }
     </style>
 </head>
@@ -71,11 +87,16 @@
     <div class="container">
         <h1>[ BİZ KİMİZ? ]</h1>
         
+        <div class="manifesto-box">
+            <p>> <strong>Biz zengin sınıf için bir felaketiz. Faşizme inat, yaşasın RedHack!</strong></p>
+            <p>> <strong>Halk için hack. İlk hack beyinde başlar! Hack teorisi olmadan hacking olmaz.</strong></p>
+        </div>
+
         <p>Bizler; dijital evrenin karanlığında bilginin özgürlüğünü savunan, sansüre ve adaletsizliğe karşı duran anonim bir kolektifiz.</p>
         
         <p>Sistemlerin ve sınıfların ötesinde, halkın sesini dijital mecralarda duyurmak için varız.</p>
         
-        <p>Görünmeziz, her yerdeyiz. Unutmayın, unutturmayacağız!</p>
+        <p><span class="highlight-text">Görünmeziz, her yerdeyiz. Unutmayın, unutturmayacağız!</span></p>
 
         <a href="../index.html" class="back-link">&lt;&lt; ANA SAYFAYA DÖN</a>
     </div>
