@@ -32,7 +32,6 @@
             z-index: 1;
         }
 
-        /* Üst Menü / Görsel Kapsayıcısı (Yan yana dizilim için) */
         .top-menu {
             position: relative;
             z-index: 2;
@@ -40,8 +39,8 @@
             flex-direction: row;
             justify-content: center;
             align-items: center;
-            gap: 25px; /* Elemanlar arasındaki boşluk */
-            flex-wrap: wrap; /* Mobilde alt alta geçebilmesi için */
+            gap: 25px;
+            flex-wrap: wrap;
             max-width: 90%;
         }
 
@@ -71,20 +70,16 @@
 
     <canvas id="starsCanvas"></canvas>
 
-    <!-- Üst Kısım (Görseller yan yana buraya eklenecek) -->
     <div class="top-menu">
-        
-        <!-- BİZ KİMİZ (kimdir.jpg) -->
+        <!-- BİZ KİMİZ -->
         <a href="biz-kimiz/index.html" class="menu-item">
             <img src="kimdir.jpg" alt="Biz Kimiz" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'120\'><rect width=\'100%\' height=\'100%\' fill=\'%23000\' border=\'1\'/><text x=\'50%\' y=\'50%\' fill=\'%23ff0000\' font-family=\'monospace\' font-size=\'14\' text-anchor=\'middle\'>[ kimdir.jpg ]</text></svg>';">
         </a>
 
-        <!-- Yakında eklenecek yeni öğeleri buraya aynı yapıda ekleyebilirsin:
-        <a href="yeni-sayfa/index.html" class="menu-item">
-            <img src="yeni-gorsel.jpg" alt="Yeni Sayfa">
+        <!-- FOTO GALERİ -->
+        <a href="foto-galeri/index.html" class="menu-item">
+            <img src="fotogaleri.jpg" alt="Foto Galeri" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'120\'><rect width=\'100%\' height=\'100%\' fill=\'%23000\' border=\'1\'/><text x=\'50%\' y=\'50%\' fill=\'%23ff0000\' font-family=\'monospace\' font-size=\'14\' text-anchor=\'middle\'>[ fotogaleri.jpg ]</text></svg>';">
         </a>
-        -->
-
     </div>
 
     <script>
