@@ -13,12 +13,14 @@
 
         body {
             background-color: #000000;
-            overflow: hidden;
+            overflow-x: hidden;
             height: 100vh;
             width: 100vw;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
+            padding-top: 40px;
         }
 
         canvas {
@@ -30,26 +32,38 @@
             z-index: 1;
         }
 
-        /* Ortadaki Görsel Kutusunun Stili */
-        .image-container {
+        /* Üst Menü / Görsel Kapsayıcısı (Yan yana dizilim için) */
+        .top-menu {
             position: relative;
             z-index: 2;
-            text-align: center;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 25px; /* Elemanlar arasındaki boşluk */
+            flex-wrap: wrap; /* Mobilde alt alta geçebilmesi için */
+            max-width: 90%;
         }
 
-        .image-container img {
-            max-width: 300px;
+        .menu-item {
+            text-decoration: none;
+            display: block;
+        }
+
+        .menu-item img {
+            max-width: 200px;
             width: 100%;
             height: auto;
             border: 2px solid #ff0000;
-            box-shadow: 0 0 20px #ff0000;
+            box-shadow: 0 0 15px #ff0000;
             cursor: pointer;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: block;
         }
 
-        .image-container img:hover {
+        .menu-item img:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 35px #ff0000;
+            box-shadow: 0 0 30px #ff0000;
         }
     </style>
 </head>
@@ -57,11 +71,20 @@
 
     <canvas id="starsCanvas"></canvas>
 
-    <!-- Tıklanabilir Görsel (biz-kimiz klasörüne yönlendirir) -->
-    <div class="image-container">
-        <a href="biz-kimiz/index.html">
-            <img src="kimdir.jpg" alt="Biz Kimiz" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'200\'><rect width=\'100%\' height=\'100%\' fill=\'%23000\' border=\'1\'/><text x=\'50%\' y=\'50%\' fill=\'%23ff0000\' font-family=\'monospace\' font-size=\'16\' text-anchor=\'middle\'>[ kimdir.jpg ]</text></svg>';">
+    <!-- Üst Kısım (Görseller yan yana buraya eklenecek) -->
+    <div class="top-menu">
+        
+        <!-- BİZ KİMİZ (kimdir.jpg) -->
+        <a href="biz-kimiz/index.html" class="menu-item">
+            <img src="kimdir.jpg" alt="Biz Kimiz" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'120\'><rect width=\'100%\' height=\'100%\' fill=\'%23000\' border=\'1\'/><text x=\'50%\' y=\'50%\' fill=\'%23ff0000\' font-family=\'monospace\' font-size=\'14\' text-anchor=\'middle\'>[ kimdir.jpg ]</text></svg>';">
         </a>
+
+        <!-- Yakında eklenecek yeni öğeleri buraya aynı yapıda ekleyebilirsin:
+        <a href="yeni-sayfa/index.html" class="menu-item">
+            <img src="yeni-gorsel.jpg" alt="Yeni Sayfa">
+        </a>
+        -->
+
     </div>
 
     <script>
