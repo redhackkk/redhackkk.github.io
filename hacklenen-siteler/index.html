@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HACKLENEN SİTELER - REDHACK</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #000000;
+            color: #ff0000;
+            font-family: "Courier New", Courier, monospace;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            max-width: 900px;
+            margin: 0 auto 30px auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed #ff0000;
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: #ff0000;
+            text-shadow: 0 0 10px #ff0000;
+            letter-spacing: 2px;
+        }
+
+        .back-link {
+            color: #ff0000;
+            text-decoration: none;
+            border: 1px solid #ff0000;
+            padding: 6px 12px;
+            font-weight: bold;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            background-color: #ff0000;
+            color: #000000;
+            box-shadow: 0 0 10px #ff0000;
+        }
+
+        .logs-container {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid #ff0000;
+            background-color: #050505;
+            padding: 40px 20px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .empty-message {
+            font-size: 1.1rem;
+            color: #ff3333;
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>[ HACKLENEN SİTELER ]</h1>
+        <a href="../index.html" class="back-link">&lt;&lt; ANA SAYFA</a>
+    </div>
+
+    <div class="logs-container">
+        <p class="empty-message">> Haberler ve loglar yakında eklenecek...</p>
+    </div>
+
+</body>
+</html>
