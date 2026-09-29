@@ -3,29 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REDHACK</title>
-    
-    <!-- FAVICON (ge.jpg) -->
+    <title>RedHack — Halk için Hack</title>
+    <meta name="description" content="RedHack hacktivist kolektifi. Halk için hack.">
+    <meta name="theme-color" content="#e10600">
+
     <link rel="icon" type="image/jpeg" href="ge.jpg">
 
     <style>
+        :root {
+            --red: #e10600;
+            --red-bright: #ff2b2b;
+            --red-dark: #7a0300;
+            --yellow: #ffd400;
+            --yellow-dim: #b39500;
+            --white: #f5f5f5;
+            --green: #00ff41;
+            --green-dim: #00a829;
+            --bg: #1a0000;
+            --bg-deep: #0d0000;
+            --bg-panel: #1f0505;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        html, body { height: 100%; }
+
         body {
-            background-color: #000000;
+            background:
+                radial-gradient(ellipse at top, #2a0000 0%, #1a0000 40%, #0d0000 100%);
+            background-attachment: fixed;
             overflow-x: hidden;
             min-height: 100vh;
-            width: 100vw;
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
             padding: 40px 20px;
             font-family: "Courier New", Courier, monospace;
+            position: relative;
+            color: var(--white);
         }
 
         canvas {
@@ -34,201 +55,378 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
+            z-index: 0;
+            pointer-events: none;
         }
 
-        /* BANNER & SLOGAN AREA */
-        .brand-header {
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                to bottom,
+                rgba(255, 212, 0, 0.03) 0px,
+                rgba(255, 212, 0, 0.03) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            mix-blend-mode: screen;
+        }
+
+        .content-wrap {
             position: relative;
             z-index: 2;
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* ===== BAŞLIK ===== */
+        .brand-header {
             text-align: center;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
         }
 
         .main-title {
-            font-size: 3rem;
-            color: #ff0000;
-            text-shadow: 0 0 15px #ff0000;
-            letter-spacing: 4px;
+            font-size: 3.2rem;
             font-weight: bold;
+            letter-spacing: 6px;
+            color: var(--red-bright);
+            text-shadow:
+                0 0 15px var(--red),
+                0 0 30px var(--red-dark),
+                0 0 50px rgba(225, 6, 0, 0.5);
+            position: relative;
+            display: inline-block;
+        }
+
+        .main-title .accent {
+            color: var(--yellow);
+            text-shadow:
+                0 0 15px var(--yellow),
+                0 0 30px var(--yellow-dim),
+                0 0 50px rgba(255, 212, 0, 0.5);
         }
 
         .slogan {
             font-size: 1.2rem;
-            color: #dd0000;
-            text-shadow: 0 0 8px rgba(255, 0, 0, 0.7);
-            margin-top: 5px;
-            letter-spacing: 1px;
+            color: var(--yellow);
+            text-shadow: 0 0 10px rgba(255, 212, 0, 0.8);
+            margin-top: 8px;
+            letter-spacing: 2px;
         }
 
         .since {
             font-size: 0.9rem;
-            color: #888888;
-            margin-top: 3px;
-            letter-spacing: 2px;
+            color: var(--white);
+            opacity: 0.75;
+            margin-top: 4px;
+            letter-spacing: 3px;
         }
 
-        /* SEARCH BOX AREA */
+        .since .dot {
+            color: var(--green);
+            text-shadow: 0 0 6px var(--green);
+        }
+
+        /* ===== ARAMA ===== */
         .search-container {
-            position: relative;
-            z-index: 2;
             margin-bottom: 35px;
             width: 100%;
-            max-width: 450px;
+            max-width: 480px;
         }
 
         .search-form {
             display: flex;
-            border: 1px solid #ff0000;
-            background-color: rgba(5, 5, 5, 0.8);
-            box-shadow: 0 0 12px rgba(255, 0, 0, 0.4);
+            border: 1px solid var(--yellow);
+            background-color: rgba(20, 0, 0, 0.85);
+            box-shadow: 0 0 15px rgba(255, 212, 0, 0.3);
+            transition: box-shadow 0.2s;
+        }
+
+        .search-form:focus-within {
+            box-shadow: 0 0 25px rgba(255, 212, 0, 0.7);
         }
 
         .search-input {
             background: transparent;
             border: none;
-            padding: 10px 15px;
-            color: #ff0000;
+            padding: 11px 15px;
+            color: var(--green);
             font-family: "Courier New", Courier, monospace;
             font-size: 1rem;
             width: 100%;
             outline: none;
+            caret-color: var(--green);
         }
 
         .search-input::placeholder {
-            color: #770000;
+            color: rgba(255, 212, 0, 0.55);
         }
 
         .search-button {
-            background-color: #ff0000;
-            color: #000000;
+            background-color: var(--red);
+            color: var(--white);
             border: none;
-            padding: 10px 18px;
+            padding: 11px 22px;
             font-family: "Courier New", Courier, monospace;
             font-weight: bold;
+            letter-spacing: 1px;
             cursor: pointer;
             transition: background-color 0.2s, box-shadow 0.2s;
         }
 
-        .search-button:hover {
-            background-color: #cc0000;
-            box-shadow: 0 0 10px #ff0000;
+        .search-button:hover,
+        .search-button:focus-visible {
+            background-color: var(--yellow);
+            color: #000;
+            box-shadow: 0 0 15px var(--yellow);
+            outline: none;
         }
 
-        /* TOP MENU AREA */
+        /* ===== MENÜ ===== */
         .top-menu {
-            position: relative;
-            z-index: 2;
             display: flex;
             flex-direction: row;
             justify-content: center;
-            align-items: center;
-            gap: 25px;
+            align-items: stretch;
+            gap: 22px;
             flex-wrap: wrap;
-            max-width: 90%;
+            width: 100%;
         }
 
         .menu-item {
             text-decoration: none;
             display: block;
+            position: relative;
+            flex: 1 1 200px;
+            max-width: 240px;
         }
 
         .menu-item img {
-            max-width: 200px;
             width: 100%;
             height: auto;
-            border: 2px solid #ff0000;
-            box-shadow: 0 0 15px #ff0000;
+            border: 2px solid var(--red);
+            box-shadow: 0 0 15px rgba(225, 6, 0, 0.6);
             cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
             display: block;
+            filter: saturate(1.15);
         }
 
-        .menu-item img:hover {
+        .menu-item .label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.92));
+            color: var(--white);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            padding: 20px 10px 8px;
+            text-align: center;
+            font-weight: bold;
+            text-shadow: 0 0 8px var(--red);
+            pointer-events: none;
+        }
+
+        .menu-item:hover img,
+        .menu-item:focus-visible img {
             transform: scale(1.05);
-            box-shadow: 0 0 30px #ff0000;
+            border-color: var(--yellow);
+            box-shadow: 0 0 30px var(--yellow);
+        }
+
+        .menu-item:hover .label,
+        .menu-item:focus-visible .label {
+            color: var(--yellow);
+            text-shadow: 0 0 10px var(--yellow);
+        }
+
+        .menu-item:focus-visible { outline: none; }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            margin-top: 50px;
+            width: 100%;
+            padding-top: 18px;
+            border-top: 1px solid rgba(255, 212, 0, 0.25);
+            font-size: 0.85rem;
+            color: rgba(245, 245, 245, 0.7);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            letter-spacing: 1px;
+        }
+
+        .site-footer .green {
+            color: var(--green);
+            text-shadow: 0 0 6px var(--green);
+        }
+
+        .cursor-blink {
+            animation: blink 1s steps(1) infinite;
+            color: var(--green);
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            body { padding: 25px 14px; }
+            .main-title { font-size: 2.2rem; letter-spacing: 4px; }
+            .slogan { font-size: 1rem; }
+            .top-menu { gap: 14px; }
+            .menu-item { flex: 1 1 140px; max-width: 100%; }
+            .site-footer { flex-direction: column; text-align: center; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .cursor-blink { animation: none; }
         }
     </style>
 </head>
 <body>
 
-    <canvas id="starsCanvas"></canvas>
+    <canvas id="starsCanvas" aria-hidden="true"></canvas>
+    <div class="scanlines" aria-hidden="true"></div>
 
-    <!-- REDHACK BASLIK & SLOGAN -->
-    <div class="brand-header">
-        <div class="main-title">RedHack</div>
-        <div class="slogan">Halk için Hack!</div>
-        <div class="since">Since 1997</div>
-    </div>
+    <div class="content-wrap">
 
-    <!-- SITEDE ARA MODULU -->
-    <div class="search-container">
-        <form class="search-form" onsubmit="handleSearch(event)">
-            <input type="text" id="searchInput" class="search-input" placeholder="Sitede ara..." required>
-            <button type="submit" class="search-button">ARA</button>
-        </form>
-    </div>
+        <!-- BAŞLIK -->
+        <header class="brand-header">
+            <div class="main-title"><span class="accent">Red</span>Hack</div>
+            <div class="slogan">Halk için Hack!</div>
+            <div class="since"><span class="dot">●</span> Since 1997 <span class="dot">●</span></div>
+        </header>
 
-    <!-- UST MENU -->
-    <div class="top-menu">
-        <!-- BİZ KİMİZ -->
-        <a href="biz-kimiz/index.html" class="menu-item">
-            <img src="kimdir.jpg" alt="Biz Kimiz" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'120\'><rect width=\'100%\' height=\'100%\' fill=\'%23000\' border=\'1\'/><text x=\'50%\' y=\'50%\' fill=\'%23ff0000\' font-family=\'monospace\' font-size=\'14\' text-anchor=\'middle\'>[ kimdir.jpg ]</text></svg>';">
-        </a>
+        <!-- ARAMA -->
+        <div class="search-container">
+            <form class="search-form" id="searchForm">
+                <input type="text" id="searchInput" class="search-input" placeholder="> sitede ara..." required autocomplete="off">
+                <button type="submit" class="search-button">ARA</button>
+            </form>
+        </div>
 
-        <!-- FOTO GALERİ -->
-        <a href="foto-galeri/index.html" class="menu-item">
-            <img src="fotogaleri.jpg" alt="Foto Galeri" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'120\'><rect width=\'100%\' height=\'100%\' fill=\'%23000\' border=\'1\'/><text x=\'50%\' y=\'50%\' fill=\'%23ff0000\' font-family=\'monospace\' font-size=\'14\' text-anchor=\'middle\'>[ fotogaleri.jpg ]</text></svg>';">
-        </a>
+        <!-- MENÜ -->
+        <nav class="top-menu" aria-label="Ana menü">
+            <a href="biz-kimiz/index.html" class="menu-item">
+                <img src="kimdir.jpg" alt="Biz Kimiz"
+                     onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'240\' height=\'140\'><rect width=\'100%\' height=\'100%\' fill=\'%231a0000\' stroke=\'%23e10600\' stroke-width=\'2\'/><text x=\'50%\' y=\'50%\' fill=\'%23ffd400\' font-family=\'monospace\' font-size=\'14\' text-anchor=\'middle\'>[ kimdir.jpg ]</text></svg>';">
+                <span class="label">BİZ KİMİZ</span>
+            </a>
 
-        <!-- HACKLENEN SİTELER -->
-        <a href="hacklenen-siteler/index.html" class="menu-item">
-            <img src="404.jpg" alt="Hacklenen Siteler" onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'120\'><rect width=\'100%\' height=\'100%\' fill=\'%23000\' border=\'1\'/><text x=\'50%\' y=\'50%\' fill=\'%23ff0000\' font-family=\'monospace\' font-size=\'14\' text-anchor=\'middle\'>[ 404.jpg ]</text></svg>';">
-        </a>
+            <a href="foto-galeri/index.html" class="menu-item">
+                <img src="fotogaleri.jpg" alt="Foto Galeri"
+                     onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'240\' height=\'140\'><rect width=\'100%\' height=\'100%\' fill=\'%231a0000\' stroke=\'%23ffd400\' stroke-width=\'2\'/><text x=\'50%\' y=\'50%\' fill=\'%2300ff41\' font-family=\'monospace\' font-size=\'14\' text-anchor=\'middle\'>[ fotogaleri.jpg ]</text></svg>';">
+                <span class="label">FOTO GALERİ</span>
+            </a>
+
+            <a href="hacklenen-siteler/index.html" class="menu-item">
+                <img src="404.jpg" alt="Hacklenen Siteler"
+                     onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'240\' height=\'140\'><rect width=\'100%\' height=\'100%\' fill=\'%231a0000\' stroke=\'%2300ff41\' stroke-width=\'2\'/><text x=\'50%\' y=\'50%\' fill=\'%23e10600\' font-family=\'monospace\' font-size=\'14\' text-anchor=\'middle\'>[ 404.jpg ]</text></svg>';">
+                <span class="label">HACKLENEN SİTELER</span>
+            </a>
+        </nav>
+
+        <!-- FOOTER -->
+        <footer class="site-footer">
+            <span><span class="green">&gt;</span> RedHack</span>
+            <span><span class="green">&gt;</span> halk için hack <span class="cursor-blink">_</span></span>
+        </footer>
+
     </div>
 
     <script>
-        // SİTEDE ARAMA YÖNLENDİRME SCRIPT'İ
-        function handleSearch(e) {
-            e.preventDefault();
-            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+    (function () {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-            if (query.includes('kim') || query.includes('biz') || query.includes('manifesto') || query.includes('hakkında')) {
-                window.location.href = 'biz-kimiz/index.html';
-            } else if (query.includes('foto') || query.includes('galeri') || query.includes('resim') || query.includes('görsel')) {
-                window.location.href = 'foto-galeri/index.html';
-            } else if (query.includes('hack') || query.includes('site') || query.includes('log') || query.includes('404')) {
-                window.location.href = 'hacklenen-siteler/index.html';
+        // ===== ARAMA =====
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+
+        const routes = [
+            { keys: ['kim', 'biz', 'manifesto', 'hakkında', 'hakkinda', 'kimiz'], url: 'biz-kimiz/index.html' },
+            { keys: ['foto', 'galeri', 'resim', 'görsel', 'gorsel'], url: 'foto-galeri/index.html' },
+            { keys: ['hack', 'site', 'log', '404', 'hacklenen'], url: 'hacklenen-siteler/index.html' }
+        ];
+
+        searchForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const raw = searchInput.value.toLowerCase().trim();
+            if (!raw) return;
+            const words = raw.split(/\s+/);
+            const match = routes.find(r => words.some(w => r.keys.includes(w)));
+            if (match) {
+                window.location.href = match.url;
             } else {
-                alert('Arama sonucu bulunamadı: "' + query + '"');
+                showTerminalMessage(`Sonuç bulunamadı: "${raw}"`);
             }
+        });
+
+        function showTerminalMessage(msg) {
+            let box = document.getElementById('terminal-msg');
+            if (!box) {
+                box = document.createElement('div');
+                box.id = 'terminal-msg';
+                box.style.cssText = `
+                    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+                    background: #1a0000; color: #00ff41; border: 1px solid #00ff41;
+                    padding: 10px 20px; font-family: monospace; z-index: 10;
+                    box-shadow: 0 0 15px #00ff41; max-width: 90%; font-size: 0.9rem;
+                `;
+                document.body.appendChild(box);
+            }
+            box.textContent = `> ${msg}`;
+            clearTimeout(box._t);
+            box._t = setTimeout(() => box.remove(), 3000);
         }
 
-        // KIZIL YILDIZ ARKA PLAN ANIMASYONU
+        // ===== CANVAS — KIZIL + SARI + YEŞİL + BEYAZ YILDIZLAR =====
         const canvas = document.getElementById('starsCanvas');
         const ctx = canvas.getContext('2d');
-
         let stars = [];
-        const numStars = 150;
+        let numStars = 0;
+
+        const PALETTE = [
+            { r: 225, g: 6,   b: 0   },
+            { r: 255, g: 43,  b: 43  },
+            { r: 255, g: 212, b: 0   },
+            { r: 0,   g: 255, b: 65  },
+            { r: 245, g: 245, b: 245 }
+        ];
+
+        const COLOR_WEIGHTS = [0.30, 0.15, 0.30, 0.15, 0.10];
+
+        function pickColor() {
+            const r = Math.random();
+            let acc = 0;
+            for (let i = 0; i < COLOR_WEIGHTS.length; i++) {
+                acc += COLOR_WEIGHTS[i];
+                if (r <= acc) return PALETTE[i];
+            }
+            return PALETTE[0];
+        }
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            numStars = Math.min(200, Math.floor((canvas.width * canvas.height) / 12000));
         }
 
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        function drawFivePointStar(ctx, cx, cy, spikes, outerRadius, innerRadius, alpha) {
+        function drawFivePointStar(cx, cy, spikes, outerRadius, innerRadius, alpha, color) {
             let rot = Math.PI / 2 * 3;
-            let x = cx;
-            let y = cy;
-            let step = Math.PI / spikes;
+            let x = cx, y = cy;
+            const step = Math.PI / spikes;
 
             ctx.save();
             ctx.beginPath();
             ctx.moveTo(cx, cy - outerRadius);
-
             for (let i = 0; i < spikes; i++) {
                 x = cx + Math.cos(rot) * outerRadius;
                 y = cy + Math.sin(rot) * outerRadius;
@@ -240,13 +438,12 @@
                 ctx.lineTo(x, y);
                 rot += step;
             }
-
             ctx.lineTo(cx, cy - outerRadius);
             ctx.closePath();
 
-            ctx.fillStyle = `rgba(255, 0, 0, ${alpha})`;
-            ctx.shadowBlur = 12;
-            ctx.shadowColor = '#ff0000';
+            ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`;
+            ctx.shadowBlur = 14;
+            ctx.shadowColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
             ctx.fill();
             ctx.restore();
         }
@@ -257,44 +454,50 @@
                 this.y = Math.random() * canvas.height;
                 this.outerRadius = Math.random() * 5 + 3;
                 this.innerRadius = this.outerRadius / 2;
-                this.alpha = Math.random();
+                this.alpha = Math.random() * 0.7 + 0.15;
                 this.speed = Math.random() * 0.02 + 0.005;
                 this.increasing = Math.random() > 0.5;
+                this.color = pickColor();
             }
-
             draw() {
-                drawFivePointStar(ctx, this.x, this.y, 5, this.outerRadius, this.innerRadius, this.alpha);
+                drawFivePointStar(ctx, this.x, this.y, 5, this.outerRadius, this.innerRadius, this.alpha, this.color);
             }
-
             update() {
                 if (this.increasing) {
                     this.alpha += this.speed;
-                    if (this.alpha >= 1) this.increasing = false;
+                    if (this.alpha >= 0.9) this.increasing = false;
                 } else {
                     this.alpha -= this.speed;
-                    if (this.alpha <= 0.05) this.increasing = true;
+                    if (this.alpha <= 0.08) {
+                        this.increasing = true;
+                        this.color = pickColor();
+                    }
                 }
             }
         }
 
         function initStars() {
             stars = [];
-            for (let i = 0; i < numStars; i++) {
-                stars.push(new Star());
-            }
+            for (let i = 0; i < numStars; i++) stars.push(new Star());
         }
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            stars.forEach(star => {
-                star.update();
-                star.draw();
-            });
+            for (const s of stars) { s.update(); s.draw(); }
             requestAnimationFrame(animate);
         }
 
+        window.addEventListener('resize', () => { resizeCanvas(); initStars(); });
+        resizeCanvas();
         initStars();
-        animate();
+
+        if (reduced) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(s => s.draw());
+        } else {
+            animate();
+        }
+    })();
     </script>
 </body>
 </html>
