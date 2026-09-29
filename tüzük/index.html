@@ -1,1 +1,733 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tüzük — RedHack</title>
+    <meta name="description" content="RedHack (Red Hackers Association) KızılHack Tüzüğü.">
+    <meta name="theme-color" content="#e10600">
+    <link rel="icon" type="image/jpeg" href="../ge.jpg">
+    <style>
+        :root {
+            --red: #e10600;
+            --red-bright: #ff2b2b;
+            --red-dim: #dd0000;
+            --red-dark: #7a0300;
+            --yellow: #ffd400;
+            --yellow-dim: #b39500;
+            --white: #f5f5f5;
+            --green: #00ff41;
+        }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body { height: 100%; }
+
+        body {
+            background: radial-gradient(ellipse at top, #2a0000 0%, #1a0000 40%, #0d0000 100%);
+            background-attachment: fixed;
+            color: var(--white);
+            font-family: "Courier New", Courier, monospace;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        #starsCanvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                to bottom,
+                rgba(255, 212, 0, 0.03) 0px,
+                rgba(255, 212, 0, 0.03) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            mix-blend-mode: screen;
+        }
+
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 880px;
+            width: 100%;
+            border: 1px solid var(--red);
+            padding: 35px 40px;
+            background-color: rgba(20, 0, 0, 0.85);
+            box-shadow:
+                0 0 25px rgba(225, 6, 0, 0.5),
+                inset 0 0 40px rgba(225, 6, 0, 0.06);
+            backdrop-filter: blur(2px);
+        }
+
+        .corner {
+            position: absolute;
+            color: var(--yellow);
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-shadow: 0 0 8px var(--yellow);
+            pointer-events: none;
+            user-select: none;
+        }
+        .corner.tl { top: 4px; left: 8px; }
+        .corner.tr { top: 4px; right: 8px; }
+        .corner.bl { bottom: 4px; left: 8px; }
+        .corner.br { bottom: 4px; right: 8px; }
+
+        h1 {
+            font-size: 1.9rem;
+            color: var(--red-bright);
+            text-shadow: 0 0 12px var(--red), 0 0 25px var(--red-dark);
+            margin-bottom: 8px;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+
+        .tuzuk-sub {
+            text-align: center;
+            color: var(--yellow);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+            text-shadow: 0 0 8px rgba(255, 212, 0, 0.6);
+        }
+
+        .tuzuk-meta {
+            text-align: center;
+            color: rgba(245, 245, 245, 0.6);
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed var(--red);
+        }
+
+        .tuzuk-meta .green {
+            color: var(--green);
+            text-shadow: 0 0 6px var(--green);
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            color: var(--yellow);
+            text-shadow: 0 0 10px rgba(255, 212, 0, 0.6);
+            margin: 35px 0 18px;
+            padding: 10px 14px;
+            border-left: 4px solid var(--red);
+            background-color: rgba(225, 6, 0, 0.08);
+            letter-spacing: 3px;
+        }
+
+        h2 .num {
+            color: var(--green);
+            text-shadow: 0 0 6px var(--green);
+            margin-right: 8px;
+        }
+
+        h3 {
+            font-size: 1.05rem;
+            color: var(--red-bright);
+            text-shadow: 0 0 8px var(--red);
+            margin: 26px 0 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(225, 6, 0, 0.3);
+            letter-spacing: 2px;
+        }
+
+        h3 .green-arrow {
+            color: var(--green);
+            text-shadow: 0 0 6px var(--green);
+            margin-right: 6px;
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.85;
+            color: var(--white);
+            opacity: 0.9;
+            margin-bottom: 14px;
+            text-shadow: 0 0 3px rgba(225, 6, 0, 0.4);
+        }
+
+        .hl {
+            color: var(--yellow);
+            font-weight: bold;
+            text-shadow: 0 0 6px rgba(255, 212, 0, 0.6);
+        }
+
+        .red {
+            color: var(--red-bright);
+            font-weight: bold;
+            text-shadow: 0 0 6px var(--red);
+        }
+
+        .green {
+            color: var(--green);
+            font-weight: bold;
+            text-shadow: 0 0 6px var(--green);
+        }
+
+        .quote {
+            display: block;
+            border-left: 3px solid var(--green);
+            padding: 12px 0 12px 16px;
+            margin: 16px 0;
+            color: rgba(255, 212, 0, 0.9);
+            font-style: italic;
+            background-color: rgba(0, 255, 65, 0.04);
+        }
+
+        /* Madde listeleri */
+        .madde-list {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .madde-list li {
+            position: relative;
+            padding: 12px 0 12px 52px;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--white);
+            opacity: 0.9;
+            border-bottom: 1px solid rgba(225, 6, 0, 0.15);
+        }
+
+        .madde-list li::before {
+            content: attr(data-key);
+            position: absolute;
+            left: 0;
+            top: 12px;
+            color: var(--yellow);
+            font-weight: bold;
+            font-size: 1rem;
+            text-shadow: 0 0 6px rgba(255, 212, 0, 0.6);
+            min-width: 40px;
+            text-align: right;
+            padding-right: 8px;
+            border-right: 1px solid rgba(255, 212, 0, 0.3);
+        }
+
+        .madde-list li:last-child { border-bottom: none; }
+
+        /* Numaralı büyük maddeler */
+        .madde-block {
+            margin: 20px 0;
+            padding: 16px 20px;
+            border: 1px solid rgba(225, 6, 0, 0.3);
+            background-color: rgba(225, 6, 0, 0.04);
+        }
+
+        .madde-block .madde-title {
+            color: var(--yellow);
+            font-weight: bold;
+            font-size: 1.05rem;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            text-shadow: 0 0 8px rgba(255, 212, 0, 0.6);
+        }
+
+        .madde-block .madde-title .n {
+            color: var(--green);
+            text-shadow: 0 0 6px var(--green);
+            margin-right: 8px;
+        }
+
+        .ceza-list {
+            list-style: none;
+            margin: 12px 0 12px 20px;
+        }
+
+        .ceza-list li {
+            padding: 6px 0 6px 26px;
+            position: relative;
+            color: var(--white);
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .ceza-list li::before {
+            content: "›";
+            position: absolute;
+            left: 4px;
+            color: var(--red-bright);
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-shadow: 0 0 6px var(--red);
+        }
+
+        /* Görsel */
+        .tuzuk-img {
+            display: block;
+            max-width: 320px;
+            width: 100%;
+            height: auto;
+            margin: 35px auto 25px;
+            border: 2px solid var(--red);
+            box-shadow: 0 0 25px rgba(225, 6, 0, 0.7);
+            filter: saturate(1.15);
+        }
+
+        .signoff {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid var(--green);
+            background-color: rgba(0, 255, 65, 0.05);
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+        }
+
+        .signoff p {
+            color: var(--green);
+            font-weight: bold;
+            font-size: 1.05rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 8px var(--green);
+            margin-bottom: 6px;
+        }
+
+        .signoff p:last-child { margin-bottom: 0; }
+
+        .signoff .red-line {
+            color: var(--red-bright);
+            text-shadow: 0 0 8px var(--red);
+            font-size: 0.95rem;
+        }
+
+        .page-nav {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(255, 212, 0, 0.4);
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--yellow);
+            text-decoration: none;
+            border: 1px solid var(--yellow);
+            padding: 8px 16px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+        .back-link:hover,
+        .back-link:focus-visible {
+            background-color: var(--yellow);
+            color: #000;
+            box-shadow: 0 0 15px var(--yellow);
+            outline: none;
+        }
+
+        .site-footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 212, 0, 0.2);
+            font-size: 0.85rem;
+            color: rgba(245, 245, 245, 0.7);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            letter-spacing: 1px;
+        }
+
+        .site-footer .green {
+            color: var(--green);
+            text-shadow: 0 0 6px var(--green);
+        }
+
+        .cursor-blink {
+            animation: blink 1s steps(1) infinite;
+            color: var(--green);
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 12px; }
+            .container { padding: 25px 20px; }
+            h1 { font-size: 1.4rem; letter-spacing: 2px; }
+            h2 { font-size: 1.05rem; letter-spacing: 2px; padding: 8px 10px; }
+            h3 { font-size: 0.98rem; }
+            p, .madde-list li { font-size: 0.94rem; }
+            .madde-list li { padding-left: 42px; }
+            .madde-block { padding: 14px; }
+            .tuzuk-img { max-width: 100%; }
+            .page-nav { flex-direction: column; }
+            .back-link { text-align: center; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .cursor-blink { animation: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="starsCanvas" aria-hidden="true"></canvas>
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <main class="container" role="main">
+        <div class="corner tl">+</div>
+        <div class="corner tr">+</div>
+        <div class="corner bl">+</div>
+        <div class="corner br">+</div>
+
+        <h1>[ REDHACK TÜZÜĞÜ ]</h1>
+        <div class="tuzuk-sub"><span class="green">&gt;</span> Red Hackers Association / Kızıl Hackerlar Birliği <span class="green">&lt;</span></div>
+        <div class="tuzuk-meta">RHA Tüzüğü, RHA'nın sınıf mücadelesindeki konumunu güçlendirip, sınıf yararına örgütlü iş yapmanın zorunluluğundan <span class="green">RHA/MK</span> tarafından <span class="green">2006</span> yılında yazılmıştır.</div>
+
+        <!-- ================= I. BÖLÜM ================= -->
+        <h2><span class="num">I.</span> BÖLÜM — RHA'NIN NİTELİĞİ VE AMAÇLARI</h2>
+
+        <ul class="madde-list">
+            <li data-key="a)">R.H.A; çeşitli milliyetlerden Türkiye ve Dünya proletaryasının ve ezilen halkların teknolojik alandaki saldırı, savunma, araştırma-inceleme ve geliştirme gücüdür. R.H.A, bilişim ve iletişim sektöründe çalışan işçiler veya bu dalda uzman kişilerden oluşur. R.H.A'ya rehberlik eden, ezilen sınıf ve halkların ortak ideolojisinin bu alana yansımasıyla şekillenen <span class="hl">REDHACK felsefesi</span>dir. Bu felsefe, Marksist diyalektiğin bu alanı yorumlamasından başka bir şey değildir.</li>
+
+            <li data-key="b)">R.H.A, <span class="red">1997 Mayıs</span>'ında kurulmuştur. Kuruluşundaki mantık; <span class="quote">« Marksizm dogma değil, bir eylem kılavuzudur »</span> kuramına dayanmaktadır. Somut koşulların somut tahlili ilkesinden yola çıkan, teknoloji sektörünün bilişim ve iletişim kollarında alın teri döken yoldaşlar tarafından Türkiye'de kurulmuştur. Eylemlerine yön verecek esas merkez Türkiye olmak üzere esas görevi de Türkiye Devrimci Hareketine devrimin bu alanında yardımcı olabilmek; Türkiye ve dünya proletaryasına ve de ezilen halklara bir nebze de olsa dayanışma gösterebilmektir. Bu düşünceyle yola çıkan R.H.A, dünyaya bakış anahtarı Diyalektik Materyalizmle, başta açık ve özgür kod olmak üzere birçok teknolojik yeniliği analiz ederek, bu alandaki savaşın yönteminin adını REDHACK olarak koymuş, REDHACK sentezine varmıştır. REDHACK felsefesi; ezenle ezilenler arasındaki savaşın, gelişen teknolojik kulvarlarda ezilenler lehine kullanılmasının, geliştirilmesinin adı ve mantığıdır.</li>
+
+            <li data-key="c)">R.H.A, hiçbir örgüte direkt veya dolaylı bağıntılı değildir. R.H.A, ülkemiz coğrafyası esas olmak üzere dünya genelinde sınıf yararına teori ve pratik gösteren, sınıf düşmanlarıyla amansız savaşan tüm devrimci örgüt ve üyelerinin sanal alandaki gücüdür. Bu beraberliği, dayanışmayı bozabilecek tüm hareketleri <span class="hl">devrimci dayanışma bozgunculuğu</span> olarak anlar; grupçu, benci tüm bu tür pratiklerle amansız mücadele eder.</li>
+
+            <li data-key="d)">R.H.A'nın maddi varoluşu, çağımızda genelde teknolojinin, özelde bilişim ve iletişim teknolojilerinin nitel anlamda aldığı mesafeler ve geldiği boyutla açıklanır. Düşünsel varoluşu da bu alanda sınıfımıza ve sınıfımız yararına ne varsa saldıran egemen düşünceye bir başkaldırış, sınıfımız lehine subjektif koşullarının geliştirilmesi düşüncesidir. R.H.A, teknolojinin emperyalizmin kontrolünde olmasına ve egemenlerin çıkarlarına kullanılmasına karşın; teknolojiyi, ilerlemesinden kaynaklı özünde devrimci görür. R.H.A, teknolojiye değil; teknolojiyi ezilen halklara karşı bir baskı aracı olarak kullanan ve kendi subjektif koşullarına yedekleyerek kâr amacıyla kullanan emperyalizme karşıdır. R.H.A, teknoloji ve kollarının, tekelci kapitalist haydutların elindeki güçle, kendi çirkef emelleri için ellerinde tutulmasını lanetler. R.H.A, Devrimci hareketin, sosyalizm ve yüce komünizm mücadelesinin başarıya ulaşması durumunda, teknolojinin özüne uygun, insanlığın yararına ve hizmetinde, kolektif ve özgür bir biçimde kullanılacağı bilinciyle hareket eder. Nihai hedef komünizm için hiçbir fedakârlıktan kaçınmaz.</li>
+
+            <li data-key="e)">R.H.A bileşeni, Marksizmi birlik için temel kriter, bütün pratiklerine yön veren teorik temel kabul eder. Türkiye ve Dünya devrimi için mücadele eden illegal devrimci Marksist örgütler başta ve öncelikli olmak üzere, enternasyonal proletarya ve ezilen halklarının yararına, teknolojik alandaki araştırma-inceleme-geliştirme, savunma ve saldırı örgütüdür. Ve bu ilke gereği, kendi konusunda, enternasyonal proletaryayı birleştirebilecek bütün çabaları gösterir. Aynı zamanda iletişim ve bilişim kollarında emek veren tüm proleter bilinçli hacker'ları, enternasyonal hacker örgütümüz <span class="hl">Red Hackers Block (RHB)</span> altında örgütlemeyi öncelikli görevlerinden kabul eder.</li>
+
+            <li data-key="f)">R.H.A, üyelerini ve halkı her türden milliyetçiliğe ve şovenizme dayalı düşüncelere karşı enternasyonalizm ruhu ile eğiterek, bu tür eğilimlerin gelişmesine asla müsaade etmez.</li>
+
+            <li data-key="g)">R.H.A, <span class="hl">Ulusların Kendi Kaderini Tayin Hakkı (UKKTH)</span> ilkesini kayıtsız, şartsız, koşulsuz kabul eder. Her türlü milli imtiyaz ve üstünlüğe karşı çıkar, tüm milliyetlerin tam hak eşitliğini savunur.</li>
+
+            <li data-key="h)">R.H.A, yürüttüğü mücadele platformu olarak, iletişim ve bilişim teknolojilerini esas, diğer teknolojik platformları tali görür. R.H.A, bu mücadele biçiminde, illegal mücadeleyi esas, diğer mücadele biçimlerini tali görür. R.H.A, ülkemizdeki objektif koşulların dayatmasının neticesinde, tüm örgütlenmelerini illegal olarak yapma stratejisini benimser.</li>
+
+            <li data-key="i)">R.H.A, kendi içinde gönüllü birlikteliğe dayanan bir dijital örgüttür. Demokratik merkeziyetçilik esaslarına göre tüm üyeleri için geçerli, bilinçli ve koşulları göz ardı etmeyen devrimci disiplin hüküm sürer. <span class="hl">Eleştiri ve öz-eleştiri</span>yi gelişimin en önemli şartlarından biri kabul eder. Devrimci sorumluluklarından ve felsefesinden, irade ve eylem birliğinden doğan gücünü zayıflatan ve R.H.A'yı yıkmayı amaçlayan hiziplerin varlığına asla müsaade etmez. Her türden oportünizme karşı kararlılıkla mücadele eder. Sınıf mücadelesinin sadece dışarıda olduğunu reddeder; bu mücadelenin yansıması olan sapmalarla mücadeleyi elden bırakmaz. Burjuvazinin sadece dıştan değil, içten de saldırabileceğini ve R.H.A'yı türlü oyunlarla tasfiye etmeye çalışacağının bilinciyle hareket eder. Proleter devrimci kültürü, egemen yoz kültüre karşı içte ve dışta tutarlı ve kararlı bir şekilde savunur, geliştirir ve yayar.</li>
+
+            <li data-key="j)">R.H.A, görev olarak; Devrimci hareketin subjektif koşullarını güçlendirmenin yanı sıra, devrimin objektif koşullarında, yönetenle yönetilen arasındaki çelişkiyi gerçekleri rehber alarak derinleştirmek; devrimci hareketin gündemini yönetilenlere ve halkımıza taşıyarak, halkımızın gerçekleri öğrenmesini sağlayarak objektif şartların daha da olgunlaşmasını sağlamaktır.</li>
+
+            <li data-key="k)">R.H.A, diyalektik materyalizm ile yorumladığı teknoloji kavramında, incelemesini yaptığı <span class="hl">« yeni teknolojiler »</span> ve ayakları havada kalan <span class="hl">« özgür ve açık yazılım »</span> felsefesini bir netliğe oturtarak <span class="red">« halk için hack »</span> sentezine varmış; yani <span class="red">REDHACK (Kızıl Hack)</span> sentezine ulaşmıştır. REDHACK felsefesi, her türden amaçsız, bilinçsiz teknoloji kullanımı ve düşmanlığına, hack eylemi ve oluşumuna karşı çıkar. Tüm olanaklarını « halk için hack » kavramına göre şekillendirir. Hacker'ların veya hacker gruplarının halk yararına pratik sergilemeyenlerini bilinçlendirmeye çalışırken; burjuvazi yararına kurulmuş ve devrimci olanakları yok etmeye çalışan, saldırgan faşist kontra hareket ve örgütlenmelere izin vermez. R.H.A, devrimcilerin olanaklarına karşı yapılan herhangi bir saldırıyı kendine kabul eder; saldırıya karşı savunma ve saldırı siyaseti izler. WhiteHack (beyaz hack), BlackHack (siyah hack) vb. gibi sistemin yedeği, egemenlerin popülist oyuncağı hack türlerine; sistemin karşısında, ezilenlerin yanında olan bilinçli hack felsefesi REDHACK felsefesiyle cevap verir. Bu felsefenin, bilişimcileri, iletişimcileri ve hacker'ları özgür, eşit, adil bir dünyaya götürecek yegâne felsefe olduğunu ilan eder. Hacker'lığın özüne uygun davranmaları için, tüm hacker'ları bu felsefe etrafında örgütlenmeye davet eder.</li>
+
+            <li data-key="l)">R.H.A, hiçbir örgüte bağımlı olmamakla beraber örgütleri birleştirmek gibi maceracı ve idealist mantıkta değildir. R.H.A, aynıların ve ayrıların nedenlerinden çok, somut gerçeklikle ve eylem birlikleriyle ilgilenir; var olan devrimcileri dayanışma kültürüne göre değerlendirir.</li>
+
+            <li data-key="m)">R.H.A, Türkiye Devrimci Hareketi başta olmak üzere, Enternasyonal Devrimci Harekete her türlü olanaklarını sağlayarak, onların düşmanla olan savaşımında teknolojik gelişimi için elinden geleni yapar. R.H.A, devrimcilerin yüce komünizm hedefine ulaşmaları için, kendi alanında hiçbir fedakârlıktan kaçınmaz. R.H.A, yüce komünizm davasında, sonuna kadar devrimcilerin bu alandaki örgütü olacağını ve hiçbir fedakârlıktan kaçınmayacağını ilan eder.</li>
+        </ul>
+
+        <!-- ================= II. BÖLÜM ================= -->
+        <h2><span class="num">II.</span> BÖLÜM — R.H.A ÜYELİĞİ</h2>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">MADDE 1 —</span> Sınıf kökeni ne olursa olsun, Türkiyeli herhangi bir kişi R.H.A üyesi olabilir.</div>
+            <p>R.H.A'ya üye olmanın şartları şunlardır:</p>
+            <ul class="ceza-list">
+                <li>Çeşitli Hack, Crack, Code, OS, Şifreleme Teknikleri, İletişim Protokolleri, İletişim araç ve sistem teknikleri, Grafik vb. konuların en az birinde uzmanlık derecesinde yetkin olması veya bu alanda işe yarayacak başka bir konuda uzman olması.</li>
+                <li>R.H.A tüzüğünü ve REDHACK felsefesini kabul etmek, R.H.A karar ve kurallarını uygulamak, disiplinine uymak.</li>
+                <li>Deşifre olmamış olmak, olabilecek koşullarda bulunmamak.</li>
+            </ul>
+        </div>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">MADDE 2 —</span> R.H.A'ya üye olma işlemi şu şekilde gerçekleşir;</div>
+            <p>R.H.A'ya üye olmak isteyen her kişi, herhangi bir R.H.A üyesine bu istemini —koşulların el vermediği zamanlar hariç— yazılı olarak R.H.A katılım forumunu doldurarak verir. R.H.A üyesi de, kişinin bu istemini hiç geciktirmeden bağlı olduğu komiteye verir. Komite bileşenleri bu istemi değerlendirip, oy birliğiyle onaylarsa kendi görüşlerini ekleyerek R.H.A MK'sına (Merkez Komite) iletir. MK ilk toplantısında bunu değerlendirip, kararı —koşullara bağlı bir biçimde— yazılı olarak aynı yoldan ulaştırır. Üye isteminde bulunan her kişi adaylık forumunu detaylı bir şekilde doldurur. Üyelik işlemi kabul edilen her kişi <span class="hl">R.H.A/Aday Üye</span>'si ve <span class="hl">RedStar</span> (RedHack alt grubu) üyesi olur. RedStar, R.H.A'nın alt grubudur. R.H.A/Aday Üyelikle paralel bir şekilde yürür. RedStar'daki amaç, başvuran kişiyi tanımak, yetkinlik derecesini ölçmek, onun da R.H.A'yı tanımasını pratik içinde sağlamaktır. R.H.A Aday üyeliği ve paralelinde gelişen RedStar'ın üyeliği maksimum 6 (altı) aydır. Aday üyenin pratiğine, teorik gelişimine bakılarak 6 ay dolmadan veya 6 ay bitiminde tam üyeliğe kabul veya reddedilir. Bu 6 ay içinde R.H.A/Aday üyesi her bir aday, RedStar içinde sıkı bir denetime tabi tutulur. Gerektiği dönemlerde, bu 6 aylık R.H.A aday üyeliği ve RedStar üyeliği, MK'nin onayı alınarak bir 6 ay daha uzatılır. Bu 6 ay içinde veya bitiminde R.H.A/Aday üyesinin R.H.A/Tam üyeliğe kabul edilmesi halinde, RedStar üyeliği ve aday üyeliği biterek tam üye olur ve yeteneği göz önüne alınarak yeni bir komiteye atanır.</p>
+        </div>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">MADDE 3 —</span> R.H.A Üyelerinin Görevleri:</div>
+            <ul class="madde-list">
+                <li data-key="a)">İdeolojik, politik, tekniksel seviyesini devamlı yükseltmek, Marksist teoriyi devamlı ve pratikte iç içe öğrenmek, onu bir eylem kılavuzu olarak kavrayan REDHACK felsefesini kavramak, uygulamak.</li>
+                <li data-key="b)">R.H.A ve ona bağlı örgütlenmelerinin yapısını, çıkan yayınları eleştirici gözle incelemek, eleştiriyi ve öz-eleştiriyi günlük hayatın vazgeçilmezi yapmak. R.H.A ve organlarını, sınıfımızı, halkımızı ve dünya halklarını bulunduğu her alanda oportünizmin, revizyonizmin her türüne karşı korumak. Bu tür sapmalara karşı uyanık, kararlı ve amansız olmak. Teknoloji alanları esas olmak üzere, misyonunu aşmadan, tüm alanlarda proletaryaya ve onun bu alandaki temsilcisi devrimci dayanışmanın ürünü R.H.A davasına zararlı her akıma amansız mücadeleyi görev kabul etmek, bu mücadelede cesaretli ve bilimsel olmak.</li>
+                <li data-key="c)">White (beyaz), Black (siyah), Gray (gri) hack gibi popülist ve egemenlerin işine yarayan idealist hacking türlerine karşı ideolojik mücadeleyi yürütmek ve bu tür idealizme karşı REDHACK felsefesiyle hareket etmek, « halk için hack » yöneliminden şaşmamak.</li>
+                <li data-key="d)">R.H.A'yı bir hobi olarak görmemek, reel hayatındaki örgütlü mücadelesini unutmadan R.H.A'ya önem ve zaman ayırabilmek. Gönüllü mücadeleci birliği reelde bağlı bulunduğu siyasete, dijital dünyadaki mücadelede de R.H.A'ya vermek.</li>
+                <li data-key="e)">Aldığı görevi zamanında yapması, yapamayacağı görevi almaması ve nedenleriyle niçinleriyle ortaya çıkarması.</li>
+                <li data-key="f)">R.H.A gönüllü birliği devrimcilerin dayanışmasının ürünüdür. Bu ürünü devrimci saflıkla korumak, güçlendirmek, ileriye taşımak. Bu devrimci birliği bozmaya yönelik her türlü hizipçi, darbeci çalışmaya karşı uyanık ve mücadelede kararlı olmak.</li>
+                <li data-key="g)">R.H.A disiplinine uymak, R.H.A kararlarının uygulanmasında yaratıcı ve aktif rol oynamak.</li>
+                <li data-key="h)">Proje ve eylemlerde, sınıfın, devrimcilerin, halkın çelişki ve ihtiyaçlarını, doğrularını ve menfaatlerini esas almak. Halkın dertleriyle ilgilenmek, halka hizmet edecek olanakları bu alanda yaratmak.</li>
+                <li data-key="i)">Devrimci örgütlere olanak yaratacak projeler üretmek ve bu projelerde aktif rol oynamak. Yapılan her işi kolektif yapmak, kolektifi güçlendirecek kültürü yaymak.</li>
+                <li data-key="j)">Devrimci ahlak ve kurallara göre yaşamak, proletaryanın sınıfsız topluma giden sürecinde, sınıf öncüsü devrimci örgütlerin sınıf yararına pratiklerini el üstünde tutmak. Devrimci örgütler arasında ayrımcılık yapmamak, davamızın menfaatini her türlü bireysel ve grupçu menfaatin üstünde tutmak. Halkla olan iletişimlerde tutarlı, alçakgönüllü, öğrenici, öğretici ve fedakâr olmak.</li>
+                <li data-key="k)">Halka, R.H.A'ya, devrimci örgütlere ve kendine karşı dürüst ve açık davranmak. Hataları ve yanlışları yenme konusunda eleştiri ve öz-eleştiride açık, kararlı ve cesur olmak. Her türlü komplocu, dedikoducu, arkadan konuşmacı pratiklerin sınıf ideolojimizde olmadığını, düşmanın kültürü olduğunu bilerek buna karşı durmak ve kişisel saldırı aracı haline getirilmiş yoz-eleştiriye karşı çıkmak, eleştiriyi hastalığı tedavi amaçlı ve R.H.A içinde yapmak.</li>
+                <li data-key="l)">İllegal yaşam tarzını bu alanda uygulamak, bunu delebilecek anlayışlara izin vermemek, tekno alanda kendin ve R.H.A için önlemler üretmek, illegalite kurallarını benimseyerek R.H.A dışı yaşantıda R.H.A'lı olduğunu belirtecek davranışları yapmamak. Gizemli olmak adına davayı tehlikeye atan küçük burjuva popülarizmiyle savaş vermek, kendine veya başkasına ait isim-yer-şehir-cinsiyet-fotoğraf vb. bilgileri, görevi ne olursa olsun R.H.A içinde ve dışında kimseye vermemek, direkt dosya alışverişinde bulunmamak, R.H.A dışı yaşantıda da R.H.A ile bağlantı kurulacak rumuzunu vermemek, R.H.A üyeleri dahil, hack yaşantısından kimseyle reelde buluşmamak, hack edilen veya girilen sistemde kendini deşifre edecek hareketlerden kaçınmak, her zaman en basit olaylarda bile önlemini almak-aldırmak, çeşitli sohbet kanalları ve programlarında çok dikkatli olmak, arkadaşların ile illegal hayatın arasına sınır çekmek, yeni tanıştıklarına hemen güvenmemek, güvenmeme adına herkesten şüphelenerek şüpheciliğe düşmemek.</li>
+                <li data-key="m)">Yapılan işlerle övünmemek, yapılan işleri kişi adına sahiplenecek her hareketten uzak durmak.</li>
+                <li data-key="n)">Benmerkezcilik, popülistlik, pozculuk, boşboğazlık, gevezelik, anlamsız merak, hava atma vb. küçük burjuva hastalıklara düşmemek, bunlara karşı mücadele etmek, R.H.A sırlarını gizlemek.</li>
+                <li data-key="o)">Proleterya enternasyonalizminin görevlerini yerine getirmek, milliyetçilik, şovenizm, hemofobi vb. tüm gericiliğe karşı mücadele etmek, enternasyonalist dijital örgüt Red Hackers Block'u güçlendirmek, ilişki yaratmak.</li>
+            </ul>
+        </div>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">MADDE 4 —</span> R.H.A Üyelerinin Hakları:</div>
+            <ul class="ceza-list">
+                <li>Bağlı bulunduğu R.H.A organında R.H.A'nın tüm siyasetini değerlendirebilmek, öneride ve eleştiride bulunmak. R.H.A'nın siyasetinin belirlenmesine aktif olarak katılmak.</li>
+                <li>Seçmek ve seçilmek.</li>
+                <li>Genel toplantılarda ve kendi çalıştığı organda R.H.A'nın herhangi bir kademesinde çalışan üyeler hakkında, R.H.A'da görevi ne olursa olsun eleştiri getirmek.</li>
+                <li>Kendisine disiplin cezaları ile ilgili karar veren toplantıda hazır bulunmak.</li>
+                <li>Kendi organının çözemediğini düşündüğü herhangi bir sorun hakkında üst kademelere (MK dahil) organ yoluyla danışmak.</li>
+                <li>Üyelere açık toplantılara ve alt grup ile aday-üye toplantılarına katılabilmek.</li>
+                <li>Üyelere açık yayınları okuyabilir, yazabilir, eleştirip öneride bulunabilir.</li>
+            </ul>
+        </div>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">MADDE 5 —</span> R.H.A Aday-Üye ve RedStar Üyesi Hakları:</div>
+            <p>R.H.A aday üyeleri ve RedStar üyeleri; seçme ve seçilme hakkı, tam üyelerin toplantılarına katılım hakkı ve tam üyelere açık olan yayınları okuma hakkı dışında R.H.A üyelerinin sahip olduğu bütün haklara sahiptir. R.H.A üyelerinin görevleri, R.H.A/Aday üye ve RedStar üyeleri için de geçerlidir.</p>
+        </div>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">MADDE 6 —</span> Üyelikten Ayrılma:</div>
+            <p>Her R.H.A üyesi, R.H.A/Aday Üyesi veya RedStar üyesi yazılı veya sözlü bir şekilde gerekçelerini bildirerek R.H.A'dan ayrılabilir.</p>
+        </div>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">MADDE 7 —</span> Disiplin Cezaları:</div>
+            <p>R.H.A birliğini bozan, R.H.A tüzük ve kararlarına uymayan, R.H.A içi demokrasiyi zedeleyen, üyelik ve R.H.A'nın kendine verdiği görevleri amacı dışında kullanan, R.H.A disiplinine uymayan, pratikleriyle R.H.A'yı halkın ve devrimcilerin gözünden düşüren, illegaliteyi delen, REDHACK felsefesine karşı pratikler sergileyen R.H.A üye ve üye adayları çalıştığı organ tarafından veya yüksek organca sorumlu tutulur ve cezalandırılır. Suçun ağırlığına göre bu cezalar:</p>
+            <ul class="ceza-list">
+                <li>İhtar</li>
+                <li>Ağır ihtar</li>
+                <li>Üye durumunu Aday üyeliğe çevirme</li>
+                <li>Geçici ihraç</li>
+                <li>Kesin ihraç</li>
+            </ul>
+            <p>R.H.A cezaları, suçu işleyen kişinin çalıştığı organın salt çoğunluklu oyuyla verilir. Özel bazı durumlarda MK, herhangi bir organda çalışan bir R.H.A üyesi hakkında atılmaya varan cezalar verebilir. Cezalandırılan R.H.A üyesinin çalıştığı organa bu karar gerekçeleriyle iletilir. Bütün R.H.A cezaları R.H.A/MK tarafından onaylandıktan sonra kesinleşir. R.H.A üyeliğinde bir daha alınmamak üzere çıkarılma (kesin ihraç) en büyük cezadır. Üyeler hakkında alınan her karar (koşullar el veriyorsa alınmak istenen karar) vakit geçirilmeden R.H.A/MK'ya bildirilir.</p>
+        </div>
+
+        <!-- ================= III. BÖLÜM ================= -->
+        <h2><span class="num">III.</span> BÖLÜM — R.H.A'NIN ÖRGÜTLENME İLKELERİ</h2>
+
+        <p>R.H.A'nın örgütlenme ilkeleri, demokratik merkeziyetçiliğin somutumuza uygulanışıdır. Bu ilkeye göre;</p>
+
+        <ul class="madde-list">
+            <li data-key="a)">Bütün R.H.A üyeleri aşağıdan yukarıya demokratik seçimler yoluyla iş başına gelir.</li>
+            <li data-key="b)">Bütün yönetici organlar düzenli aralıklarla üst organa hesap vermekle yükümlüdür.</li>
+            <li data-key="c)">R.H.A'nın bütününde tek disiplin geçerlidir:<br>
+                — Birey R.H.A'ya<br>
+                — Azınlık çoğunluğa<br>
+                — Alt kademeler üst kademelere<br>
+                — Tüm R.H.A organları Merkez Komitesine tabidir.</li>
+        </ul>
+
+        <p>R.H.A içi demokrasi her üyesine R.H.A'nın siyasetini ilgilendiren tüm konularda fikrini, çalıştığı R.H.A organında veya genel R.H.A üye toplantılarında savunma hakkını garanti eder. Herhangi bir R.H.A üyesi, R.H.A kararlarını yanlış bulsa da uygulamakla yükümlüdür. Karar hakkında fikrini çalıştığı parti organında, gerekse daha üst organlar nezdinde açıkça savunabilir; fakat fikrinin mücadelesini R.H.A'dan gizli ve organ dışı yapamaz. R.H.A içinde demokratik merkeziyetçilik ilkelerine göre eleştiri yapanları bastırmak, tedbirlerle eleştiri yolunu kapatmak, eleştiriyi amacından saptırmak, demokratik merkeziyetçilik ilkeleriyle uyuşmaz. Tüm R.H.A organları, üyelerini eleştirileri canlı bir tartışma ve bilinçli bir disiplinin hüküm sürdüğü ortamı yaratmakla yükümlüdür.</p>
+
+        <!-- ================= IV. BÖLÜM ================= -->
+        <h2><span class="num">IV.</span> BÖLÜM — R.H.A'NIN TEMEL ORGANLARI</h2>
+
+        <p>R.H.A'nın temel organları bürolar ve komitelerdir. Büro ve komitelerin niteliği ihtiyaca göre şekillenir; niceliği ihtiyaca göre dar veya geniş tutulur. Her komite ve büronun bir sekreteri olur. Sekreter yoldaş, bağlı olduğu komite veya büronun yürüteceği çalışmalardan birinci derece sorumlu olur. Büro veya komitenin üst organıyla temasını sağlar. Her büro ve komitede bir de sekreter yardımcısı olur; sekreter yardımcısı, sekreterin herhangi bir sebeple görevlerini yapamaması durumunda, sekreterin görevlerini yapar.</p>
+
+        <p>R.H.A büro ve komiteleri; R.H.A'yı, teknolojiyi, bu alandaki savaşını elbette ki devrimin koşullarını ileriye taşıyacak bilimsel örgütlenmenin gerekliliğidir. R.H.A bürolarının hepsi MK'ya bağlıdır. Ayda bir yapılacak MK toplantılarında geçmiş görevler ve gelecek görevleri belirler. MK'ya bağlı bürolar da ilk toplantıda kaç günde bir toplantı yapacaklarını belirler.</p>
+
+        <p>Bürolar ve komiteler 1 (bir) yılda bir yapılan R.H.A kongresinde seçilir.</p>
+
+        <h3><span class="green-arrow">&gt;</span> R.H.A Kongresi</h3>
+        <p>R.H.A Kongresi 2 (iki) yılda bir (koşulların el vermediği durumlarda MK yetkisiyle en fazla 6 ay uzatılabilir), R.H.A/MK'sı tarafından yapılan çağrıyla toplanır. Tüm üyeler bu kongreye katılır. Geçmişin değerlendirmesi yapılarak, gelecek perspektifler ortaya konulur. Bu kongre teknolojik ortamda yapılmakla beraber, tüm R.H.A organlarını, büro ve komitelerini seçer. Kongre kararlarını uygulamak, MK'nin sorumluluğundadır. Kongreden 2 ay önce bir kongre hazırlık komitesi kurulur; bu komite kongrenin tekniksel ihtiyaçlarına çözüm bulur. Kongreden 2 ay önce geçebilecek tartışmalar ve taslaklar, kongre hazırlık komitesine teslim edilir.</p>
+
+        <h3><span class="green-arrow">&gt;</span> R.H.A Komite ve Büroları</h3>
+        <p>Bürolar ve komitelerde o dalda yetenekli, işinde uzman arkadaşlar yer alır. Bürolara bağlı alt komiteler bürolara, bürolar da MK'ya hesap vermek zorundadır. MK yaptığı her toplantıda büroları denetler, görevlerin yerine gelip-gelmediğini, nedenleri ve niçinlerini, geçmiş pratikleri masaya yatırır, geleceği belirler. R.H.A, uzun veya kısa vadeli büro ve komite oluşumlarını, gerekli işlere göre kaldırılabilir, değiştirilebilir, yeni kurulabilir.</p>
+
+        <h3><span class="green-arrow">&gt;</span> R.H.A'nın Şu Anki Uzun Vadeli Komiteleri</h3>
+        <ul class="ceza-list">
+            <li>Merkez Komite (MK)</li>
+            <li>Siyasal Büro (SB)</li>
+            <li>Basın ve İnformasyon Bürosu (BİB)</li>
+            <li>Teknik Büro (TB)</li>
+            <li>Enternasyonal Büro (EB)</li>
+            <li>Hack Bürosu (HB)</li>
+            <li>Askeri Komite (AK)</li>
+            <li>Alt Grup Komitesi (AGK)</li>
+        </ul>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">a)</span> Merkez Komite (MK)</div>
+            <p>R.H.A/MK, R.H.A'nın üye sayısına ve kapasitesine göre kaç kişiden oluşacağı belirlenir. Görevlendirme normal koşullarda 1 (bir) yılda bir yapılan R.H.A kongresinde üyelerin salt çoğunluğuyla belirlenir. R.H.A kongresi üyelerin oy çoğunluğuyla en fazla 6 ay ertelenebilir. Yapılan seçimlerde MK esas üyelerinin haricinde bir de yedek üyeler seçilir. Yedek üyeler, asıl üyelerin görevlerini yapamadıkları koşullarda asıl üye olurlar. MK, R.H.A'nın en üst organıdır. Bu organda SB, BİB, TB, EB, HB organlarının sekreterleri görev alır. MK, R.H.A'nın önderliğidir. MK'nin görevi ortak bir irade ile R.H.A'nın yönetilmesidir. MK'da çıkan kararların büro ve komiteler ve onlara bağlı organlar vasıtasıyla R.H.A'nın tümüne hakim olmasıdır. Aynı zamanda kararların demokratik, kolektif bir şekilde alınmasını ve yürümesini sağlar. MK yeni seçime kadar iş başında kalır. Yeni seçime kadar R.H.A'nın bütün ideolojik, politik, örgütsel duruşundan ve pratiğinden sorumludur. MK'nin bir sekreteri bir de yardımcısı olur. MK sekreteri aynı zamanda R.H.A genel sekreteridir. Sekreter ve yardımcısı oy çokluğuyla, MK'nin kongreden sonraki ilk toplantısında seçilir. Sekreter seçildikten sonra MK içindeki işlerin yönlendiriciliğini yapar. Sekreterin alınan kararlarda 3, sekreter yardımcısının 2 oy hakkı vardır.</p>
+        </div>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">b)</span> Siyasal Büro (SB)</div>
+            <p>R.H.A/SB, R.H.A'nın kararlarının somuta geçirilmesi noktasında MK'nin görevlerini yapar. SB'nin MK içindeki sekreteri vasıtasıyla kendi komitesine ve ona bağlı komitelere MK'nin düşüncelerini ve kararlarını taşır. SB, R.H.A'nın ideolojik-politik duruşunu belirler. Gelecek eylemlerin, yapılacak işlerin niteliğini diğer komitelerin durumuna, gerekliliklerin ne olduğuna bakarak belirler. SB en az 3 kişiden oluşur; koşullara göre genişler, koşullara göre daralır. R.H.A'nın eğitimlerinden, yayın organlarının duruşuna, R.H.A'nın yeni eylemlerinin ne olmasından, geçmiş eylemlerin değerlendirmesine kadar belirler. Belirli zamanda komitelere çalışma grupları kurdurarak eğitim çalışmaları yaptırır. SB sekreteri aynı zamanda MK sekreteri yani Genel sekreterdir. SB, Alt grup RedStar'dan SB içine üye aktarım yapmaz.</p>
+        </div>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">c)</span> Basın ve İnformasyon Bürosu (BİB)</div>
+            <p>R.H.A/BİB esasta çıkacak yayınların çıkarılması, halkın ve devrimcilerin yapılan işleri öğrenmesi konularında görevlidir. Web sayfaları, çeşitli forumlar veya sohbet kanallarının yöneticiliğini yapar. BİB, bir sekreter ve bir sekreter-yardımcısı ile beraber en az 5 kişiden oluşur; BİB sekreteri aynı zamanda MK üyesidir. BİB kendi komitesine R.H.A/ÜYE'leri öncelikli olmak üzere Aday üyelerle yani Alt grup RedStar içinden yetkin elemanları oy hakları olmamakla beraber alabilir, alt komite kurabilir. Bu büro diğer komiteleri ve üyeleri çıkacak olan yayınlar içinde görevlendirebilir, onları verdiği görevlerde denetleyip, rapor halinde MK'ya sunabilir.</p>
+        </div>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">d)</span> Teknik Büro (TB)</div>
+            <p>R.H.A/TB, R.H.A'nın program ihtiyacını sağlayacak programcılardan oluşur. Bir sekreter ve bir sekreter-yardımcısıyla beraber en az 3 kişiden oluşur. TB sekreteri aynı zamanda R.H.A/MK üyesi ve R.H.A önderliğindeki Red Coders Team'in Genel Sekreteridir. TB kendi içine aday üyeler veya alt grup RedStar içine oy hakları olmamakla beraber eleman alabilir, alt gruplarda kendine bağlı olmak üzere kendi branşıyla ilgili yetkin aday üyelerle komite kurabilir. TB, R.H.A'ya özel programlar, code'lar haricinde, kitleye açık, devrimcilerin işine yarayacak programlar yapmakla, R.H.A'nın web sayfası ve sistemlerini programlamakla, yeni projeleri diğer komitelere fikir danışarak sunmak veya hayata geçirmekle yükümlüdür. MK'dan aldığı görevleri kendi içinde veya ona bağlı alt-komitelere sunmak, hayata geçirmek diğer komitelerdeki gibi en büyük vazifesidir.</p>
+        </div>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">e)</span> Enternasyonal Büro (EB)</div>
+            <p>Enternasyonal anlamdaki görevlerimizi yerine getirmekle yükümlü olan bürodur. Diğer hack gruplarına siyasetimizi taşıyacak, onlarla ilişkiler kuracak, eylem birliktelikleri örgütleyecek bürodur. Bu büro aynı zamanda örgütleyicisi olduğumuz Red Hackers Block'un örgütleyicisi ve yöneticisidir. Bu büroda ihtiyaca göre SB'den ve HB'den bir kişi bulunmakla beraber, yabancı dil bilenler öncelikli olmakla beraber EB, R.H.A aday-üyeleri veya alt grup RedStar içinden yetkin yoldaşlardan üye alabilir, onlardan kendi önderliğinde bir alt grup kurabilir. Bu büronun sekreteri aynı zamanda MK üyesi ve Red Hackers Block'un Genel sekreteridir.</p>
+        </div>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">f)</span> Hack Bürosu (HB)</div>
+            <p>Hack bürosu en az 7 kişiden oluşur. Bir sekreter ve sekreter yardımcısı vardır. Sekreteri aynı zamanda MK üyesidir. Bu büro içinde bu daldaki en yetkinler bulunur. İhtiyaca göre içinde veya kendine bağlı belirli komiteler (system hack, defaced, araştırma-inceleme, vb.) bürolar kurabilir, alt grup içinden bu komiteleri güçlendirebilirler. Aldıkları alt komite üyeleri veya kurdukları alt komitelerden diğer bürolar gibi sorumludurlar. Bu büronun amacı belirlenen hedefleri istenilen şekilde, istenilen şekile getirmektir. Ayrıca büro SB ile ortak çalışır. SB bu büronun yönelimlerine tavsiyelerde bulunmak üzere ilişki kurabilir. Ayrıca belirli eğitim çalışmalarında, kendi uzmanlık dallarında seminerler verecek, alt grupları da güçlendirecektir.</p>
+        </div>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">g)</span> Askeri Komite (AK)</div>
+            <p>Teknolojinin belirli yeniliklerini, diğer büroların yardımıyla geliştirip, devrimci durumun objektif ve subjektif şartlarını olgunlaştıracak adımları kendine görev kabul eder. AK, MK Sekreteri tarafından atama yöntemiyle oluşturulur. AK'nin üyeleri R.H.A üyelerinden veya bilmediği üyelerden olabilir. AK, MK'da sekretere bağlıdır, hesabını sekretere, sekreter de MK'ya verir. Yapılan işler, esasta halkların çelişkilerine göre ve belirli güvenilir koşullarda devrimcilerin istemine göre yapılır. AK'nin bir sekreteri ve bir de sekreter yardımcısı olur. Bu da yine Genel sekreter tarafından atama yöntemiyle olur. AK, Genel Sekretere danışarak, kendi içinde bir istihbarat komitesi kurabilme yetkisi vardır. Bu grubun sekreteri MK içinden olabilmekle beraber, olmayabilir de.</p>
+        </div>
+
+        <div class="madde-block">
+            <div class="madde-title"><span class="n">h)</span> Alt Grup Komitesi (AGK)</div>
+            <p>Alt Grup RedStar ve üst komitelerin kurduğu alt komiteleri denetler. AGK, RedStar ve Aday üyelerin gelişimini gözler, RedStar'ı yönlendirir-yönetir, MK'nin kararlarının onlara verilmesi gerekenlerini onlara verir, kavratır. RedStar'ın tüm pratiklerinden birinci derecede sorumludur. Bu grubun bir sekreteri vardır, bir de sekreter yardımcısı; sekreteri aynı zamanda R.H.A/MK'sı ve RedStar Genel Sekreteridir.</p>
+        </div>
+
+        <!-- ================= V. BÖLÜM ================= -->
+        <h2><span class="num">V.</span> BÖLÜM — R.H.A'NIN MALİ KAYNAKLARI</h2>
+
+        <p>R.H.A, somut niteliğinden kaynaklı, gelirlerini esasta illegal olmak üzere, devrimci duruşun rehberlik ettiği bir şekilde yeteneklerinden yararlanarak elde eder. Diğer yöntemleri yadsımamak, kullanabilmek kaydıyla, kamulaştırmayı esas alır. Her türlü harcama, Merkez Komitesi adına ve Merkez Komitesinin denetiminde, onun onayıyla yapılır. R.H.A büro, komite ve üyeleri, Merkez Komitesinin onayıyla harcadıkları proje, eylem, olanak vb. için olan giderlerin üstündeki tüm geliri Merkez Komitesine aktarır. Bütün büro, komite ve üyeler, gelir ve giderleri hakkında düzenli rapor tutmak, hesap vermek zorundadır.</p>
+
+        <!-- GÖRSEL -->
+        <img src="theredhack2.jpg" alt="RedHack" class="tuzuk-img"
+             onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'320\' height=\'180\'><rect width=\'100%\' height=\'100%\' fill=\'%231a0000\' stroke=\'%23e10600\' stroke-width=\'2\'/><text x=\'50%\' y=\'50%\' fill=\'%23ffd400\' font-family=\'monospace\' font-size=\'14\' text-anchor=\'middle\'>[ theredhack2.jpg ]</text></svg>';">
+
+        <!-- KAPANIŞ -->
+        <div class="signoff">
+            <p>Halk için Hack</p>
+            <p class="red-line">REDHACK</p>
+        </div>
+
+        <nav class="page-nav" aria-label="Alt sayfa navigasyonu">
+            <a href="../index.html" class="back-link">&lt;&lt; ANA SAYFA</a>
+            <a href="../biz-kimiz/index.html" class="back-link">BİZ KİMİZ &gt;&gt;</a>
+        </nav>
+
+        <footer class="site-footer">
+            <span><span class="green">&gt;</span> RedHack</span>
+            <span><span class="green">&gt;</span> halk için hack <span class="cursor-blink">_</span></span>
+        </footer>
+    </main>
+
+    <script>
+    (function () {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // ===== CANVAS — KIZIL + SARI + YEŞİL + BEYAZ YILDIZLAR =====
+        const canvas = document.getElementById('starsCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        let numStars = 0;
+
+        const PALETTE = [
+            { r: 225, g: 6,   b: 0   },
+            { r: 255, g: 43,  b: 43  },
+            { r: 255, g: 212, b: 0   },
+            { r: 0,   g: 255, b: 65  },
+            { r: 245, g: 245, b: 245 }
+        ];
+        const COLOR_WEIGHTS = [0.30, 0.15, 0.30, 0.15, 0.10];
+
+        function pickColor() {
+            const r = Math.random();
+            let acc = 0;
+            for (let i = 0; i < COLOR_WEIGHTS.length; i++) {
+                acc += COLOR_WEIGHTS[i];
+                if (r <= acc) return PALETTE[i];
+            }
+            return PALETTE[0];
+        }
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            numStars = Math.min(200, Math.floor((canvas.width * canvas.height) / 12000));
+        }
+
+        function drawFivePointStar(cx, cy, spikes, outerRadius, innerRadius, alpha, color) {
+            let rot = Math.PI / 2 * 3;
+            let x = cx, y = cy;
+            const step = Math.PI / spikes;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - outerRadius);
+            for (let i = 0; i < spikes; i++) {
+                x = cx + Math.cos(rot) * outerRadius;
+                y = cy + Math.sin(rot) * outerRadius;
+                ctx.lineTo(x, y);
+                rot += step;
+
+                x = cx + Math.cos(rot) * innerRadius;
+                y = cy + Math.sin(rot) * innerRadius;
+                ctx.lineTo(x, y);
+                rot += step;
+            }
+            ctx.lineTo(cx, cy - outerRadius);
+            ctx.closePath();
+            ctx.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`;
+            ctx.shadowBlur = 14;
+            ctx.shadowColor = `rgb(${color.r}, ${color.g}, ${color.b})`;
+            ctx.fill();
+            ctx.restore();
+        }
+
+        class Star {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.outerRadius = Math.random() * 5 + 3;
+                this.innerRadius = this.outerRadius / 2;
+                this.alpha = Math.random() * 0.7 + 0.15;
+                this.speed = Math.random() * 0.02 + 0.005;
+                this.increasing = Math.random() > 0.5;
+                this.color = pickColor();
+            }
+            draw() {
+                drawFivePointStar(ctx, this.x, this.y, 5, this.outerRadius, this.innerRadius, this.alpha, this.color);
+            }
+            update() {
+                if (this.increasing) {
+                    this.alpha += this.speed;
+                    if (this.alpha >= 0.9) this.increasing = false;
+                } else {
+                    this.alpha -= this.speed;
+                    if (this.alpha <= 0.08) {
+                        this.increasing = true;
+                        this.color = pickColor();
+                    }
+                }
+            }
+        }
+
+        function initStars() {
+            stars = [];
+            for (let i = 0; i < numStars; i++) stars.push(new Star());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const s of stars) { s.update(); s.draw(); }
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => { resizeCanvas(); initStars(); });
+        resizeCanvas();
+        initStars();
+
+        if (reduced) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(s => s.draw());
+        } else {
+            animate();
+        }
+    })();
+    </script>
+</body>
+</html>
