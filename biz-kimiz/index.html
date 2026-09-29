@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
@@ -66,7 +66,7 @@
         .container {
             position: relative;
             z-index: 2;
-            max-width: 820px;
+            max-width: 860px;
             width: 100%;
             border: 1px solid var(--red);
             padding: 35px 40px;
@@ -186,6 +186,176 @@
             letter-spacing: 1px;
         }
 
+        /* ===== NEDEN HACKLER? BÖLÜMÜ ===== */
+        .why-section {
+            margin-top: 45px;
+            padding-top: 30px;
+            border-top: 1px dashed var(--red);
+        }
+
+        .why-section h2 {
+            font-size: 1.5rem;
+            color: var(--red-bright);
+            text-shadow: 0 0 12px var(--red);
+            letter-spacing: 3px;
+            margin-bottom: 6px;
+            text-align: center;
+        }
+
+        .why-section .why-sub {
+            text-align: center;
+            color: var(--yellow);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 6px rgba(255, 212, 0, 0.6);
+        }
+
+        .why-section h3 {
+            font-size: 1.15rem;
+            color: var(--yellow);
+            letter-spacing: 2px;
+            margin: 30px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(255, 212, 0, 0.3);
+            text-shadow: 0 0 8px rgba(255, 212, 0, 0.5);
+        }
+
+        .why-section h3 .num {
+            color: var(--green);
+            text-shadow: 0 0 6px var(--green);
+            margin-right: 6px;
+        }
+
+        .why-section p {
+            font-size: 1rem;
+            line-height: 1.85;
+            color: var(--white);
+            opacity: 0.9;
+            margin-bottom: 14px;
+            text-shadow: 0 0 3px rgba(225, 6, 0, 0.4);
+        }
+
+        .why-section .hl {
+            color: var(--yellow);
+            font-weight: bold;
+            text-shadow: 0 0 6px rgba(255, 212, 0, 0.6);
+        }
+
+        .why-section .red {
+            color: var(--red-bright);
+            font-weight: bold;
+            text-shadow: 0 0 6px var(--red);
+        }
+
+        .why-section .green {
+            color: var(--green);
+            font-weight: bold;
+            text-shadow: 0 0 6px var(--green);
+        }
+
+        .why-section .quote {
+            display: block;
+            border-left: 3px solid var(--green);
+            padding: 10px 0 10px 16px;
+            margin: 16px 0;
+            color: rgba(255, 212, 0, 0.9);
+            font-style: italic;
+            background-color: rgba(0, 255, 65, 0.04);
+        }
+
+        .why-list {
+            list-style: none;
+            margin: 16px 0;
+        }
+
+        .why-list li {
+            padding: 8px 0 8px 28px;
+            position: relative;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--white);
+            opacity: 0.9;
+        }
+
+        .why-list li::before {
+            content: "›";
+            position: absolute;
+            left: 8px;
+            color: var(--green);
+            font-weight: bold;
+            font-size: 1.2rem;
+            text-shadow: 0 0 6px var(--green);
+        }
+
+        .why-numbered {
+            list-style: none;
+            counter-reset: nitem;
+            margin: 16px 0;
+        }
+
+        .why-numbered li {
+            counter-increment: nitem;
+            padding: 12px 0 12px 44px;
+            position: relative;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--white);
+            opacity: 0.9;
+            border-bottom: 1px solid rgba(225, 6, 0, 0.15);
+            margin-bottom: 4px;
+        }
+
+        .why-numbered li::before {
+            content: counter(nitem) ".";
+            position: absolute;
+            left: 0;
+            top: 12px;
+            color: var(--yellow);
+            font-weight: bold;
+            font-size: 1rem;
+            text-shadow: 0 0 6px rgba(255, 212, 0, 0.6);
+            min-width: 32px;
+            text-align: right;
+        }
+
+        .why-numbered li:last-child { border-bottom: none; }
+
+        .signoff {
+            margin-top: 35px;
+            padding: 20px;
+            border: 1px solid var(--green);
+            background-color: rgba(0, 255, 65, 0.05);
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+        }
+
+        .signoff p {
+            color: var(--green);
+            font-weight: bold;
+            font-size: 1.05rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 8px var(--green);
+            margin-bottom: 8px;
+        }
+
+        .signoff p:last-child { margin-bottom: 0; }
+
+        .signoff .red-line {
+            color: var(--red-bright);
+            text-shadow: 0 0 8px var(--red);
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        .signoff .sig-line {
+            color: var(--yellow);
+            text-shadow: 0 0 8px rgba(255, 212, 0, 0.7);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            margin-top: 12px;
+        }
+
         .page-nav {
             display: flex;
             justify-content: space-between;
@@ -246,6 +416,10 @@
             .content p, .manifesto-box p { font-size: 0.98rem; }
             .empire-line { font-size: 1rem; padding: 12px 14px; }
             .flag-img { max-width: 100%; }
+            .why-section h2 { font-size: 1.2rem; letter-spacing: 2px; }
+            .why-section h3 { font-size: 1.02rem; }
+            .why-section p, .why-list li, .why-numbered li { font-size: 0.94rem; }
+            .why-numbered li { padding-left: 36px; }
             .page-nav { flex-direction: column; }
             .back-link { text-align: center; }
         }
@@ -282,16 +456,122 @@
             <p>Kod bizim dilimiz, ağ bizim sokaklarımız. Her paket bir mesaj, her log bir tanıklıktır.</p>
         </article>
 
-        <!-- EMPERYALİZME KARŞI -->
         <p class="empire-line">
             <span class="green-accent">&gt;</span> Emperyalizme karşı dünya halklarıyla birlikteyiz <span class="green-accent">&lt;</span>
         </p>
 
-        <!-- theredhack.png -->
         <img src="theredhack.png" alt="RedHack" class="flag-img"
              onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'280\' height=\'160\'><rect width=\'100%\' height=\'100%\' fill=\'%231a0000\' stroke=\'%23e10600\' stroke-width=\'2\'/><text x=\'50%\' y=\'50%\' fill=\'%23ffd400\' font-family=\'monospace\' font-size=\'14\' text-anchor=\'middle\'>[ theredhack.png ]</text></svg>';">
 
         <p class="signature"><span class="highlight-text">Görünmeziz, her yerdeyiz. Unutmayın, unutturmayacağız!</span></p>
+
+        <!-- ============================================= -->
+        <!-- ===== REDHACK NEDEN HACKLER? BÖLÜMÜ ===== -->
+        <!-- ============================================= -->
+        <section class="why-section" aria-label="RedHack Neden Hackler?">
+
+            <h2>[ REDHACK NEDEN HACKLER? ]</h2>
+            <div class="why-sub"><span class="green">&gt;</span> iki tür deface, bir felsefe <span class="green">&lt;</span></div>
+
+            <!-- İKİ TÜR DEFACE -->
+            <h3><span class="num">&gt;</span> İki Tür "Deface Hack" Türümüz Vardır</h3>
+
+            <p><span class="red">1 — Bildiri Tarzı:</span> Bu tarz, sadece bildirimizi, mesajımızı koyduğumuz hack tarzıdır. Bilerek hiçbir dosyaya zarar vermemeye çalışırız. Bildirimizi koyar gideriz. Amacımız, düşünce özgürlüğümüzü elimizden alan zengin sınıfa karşı fakir sınıfı bilinçlendirmektir.</p>
+
+            <p>Bu gruba genelde siyasetle alakasız bireysel sayfalar, küçük işletmeler, zararsız (hastane gibi) devlet siteleri vb. girer. Bu tür bir hack olayı, bildiri dağıtmak gibi veya <span class="hl">"yazlama"</span> dediğimiz sokağın birine yazı yazmak gibidir. Zararsız, bilinçlendiricidir.</p>
+
+            <p><span class="red">2 — Saldırı Tarzı:</span> Bu tarzda saldırdığımız sitenin tüm dokümanlarını sileriz. Duruma göre kalıcı zararlar da vermeye çalışırız. Yine bazı durumlarda siteye dokunmaz, belirli kodlar yerleştirmeye çalışırız. Ayrıca genelde indexlerine durumu izah eden yazımızı da yerleştiririz.</p>
+
+            <p>Bu tür sitelerin kapsamına; <span class="hl">faşist sahipli siteler, halk düşmanı bireylerin siteleri, devlet siteleri, legal parti siteleri, uluslararası emperyalist tekeller ve onlara bağlı komprador siteleri, finans siteleri</span> vb. girmektedir.</p>
+
+            <!-- SİTE HACKLEMEKTEN BAŞKA -->
+            <h3><span class="num">&gt;</span> Site Hacklemekten Başka...</h3>
+
+            <ul class="why-list">
+                <li>Egemenler arasındaki çelişkileri yoğunlaştıracak, başka türde iletişim araçlarını ve hack yöntemlerini kullanarak hacklemek.</li>
+                <li>Yine egemenlerin gizli gündemlerini halka taşıyarak, halkın yönetenlerin gerçek yüzlerini görmelerini sağlamak.</li>
+                <li>Halktan yana iletişim ve bilişim alanında faaliyet gösterenleri korumak, onlara yönelecek saldırılara karşı koymak.</li>
+                <li>Finans şirketlerinin halkı sömürmesine karşın, finans şirketlerinin değişik türdeki sistemlerini halkın hizmetine sunmak.</li>
+                <li>Ve değişik gizli yöntemlerle ve sebeplerle site hacklemek; yani propaganda dışında hack.</li>
+            </ul>
+
+            <!-- REDHACK NİTELİĞİ VE AMAÇLARI -->
+            <h3><span class="num">&gt;</span> RedHack Niteliği ve Amaçları</h3>
+
+            <ol class="why-numbered">
+
+                <li>R.H.A; çeşitli milliyetlerden Türkiye ve Dünya proleteryasının ve ezilen halkların teknolojik alandaki saldırı, savunma, araştırma-inceleme ve geliştirme gücüdür. R.H.A, bilişim ve iletişim sektöründe çalışan işçiler veya bu dalda uzman kişilerden oluşur. R.H.A'ya rehberlik eden, ezilen sınıf ve halkların ortak ideolojisinin bu alana yansımasıyla şekillenen <span class="hl">REDHACK felsefesi</span>dir. Bu felsefe, Marksist diyalektiğin bu alanı yorumlamasından başka bir şey değildir.</li>
+
+                <li>R.H.A, <span class="red">1997 Mayıs</span>'ında kurulmuştur. Kuruluşundaki mantık; <span class="quote">« Marksizm dogma değil, bir eylem kılavuzudur »</span> kuramına dayanmaktadır. Somut koşulların somut tahlili ilkesinden yola çıkan, teknoloji sektörünün bilişim ve iletişim kollarında alın teri döken yoldaşlar tarafından Türkiye'de kurulmuştur. Eylemlerine yön verecek esas merkez Türkiye olmak üzere esas görevi de Türkiye Devrimci Hareketine devrimin bu alanında yardımcı olabilmek; Türkiye ve dünya proleteryasına ve de ezilen halklara bir nebze de olsa dayanışma gösterebilmektir. Bu düşünceyle yola çıkan R.H.A, dünyaya bakış anahtarı Diyalektik Materyalizmle, başta açık ve özgür kod olmak üzere birçok teknolojik yeniliği analiz ederek, bu alandaki savaşın yönteminin adını REDHACK olarak koymuş, REDHACK sentezine varmıştır. REDHACK felsefesi; ezenle ezilenler arasındaki savaşın, gelişen teknolojik kulvarlarda ezilenler lehine kullanılmasının, geliştirilmesinin adı ve mantığıdır.</li>
+
+                <li>R.H.A, hiçbir örgüte direkt veya dolaylı bağıntılı değildir. R.H.A, ülkemiz coğrafyası esas olmak üzere dünya genelinde sınıf yararına teori ve pratik gösteren, sınıf düşmanlarıyla amansız savaşan tüm devrimci örgüt ve üyelerinin sanal alandaki gücüdür. Bu beraberliği, dayanışmayı bozabilecek tüm hareketleri <span class="hl">devrimci dayanışma bozgunculuğu</span> olarak anlar; grupçu, benci tüm bu tür pratiklerle amansız mücadele eder.</li>
+
+                <li>R.H.A'nın maddi varoluşu, çağımızda genelde teknolojinin, özelde bilişim ve iletişim teknolojilerinin nitel anlamda aldığı mesafeler ve geldiği boyutla açıklanır. Düşünsel varoluşu da bu alanda sınıfımıza ve sınıfımız yararına ne varsa saldıran egemen düşünceye bir başkaldırış, sınıfımız lehine subjektif koşullarının geliştirilmesi düşüncesidir. R.H.A, teknolojinin emperyalizmin kontrolünde olmasına ve egemenlerin çıkarlarına kullanılmasına karşın; teknolojiyi, ilerlemesinden kaynaklı özünde devrimci görür. R.H.A, teknolojiye değil; teknolojiyi ezilen halklara karşı bir baskı aracı olarak kullanan ve kendi subjektif koşullarına yedekleyerek kâr amacıyla kullanan emperyalizme karşıdır. R.H.A, teknoloji ve kollarının, tekelci kapitalist haydutların elindeki güçle, kendi çirkef emelleri için ellerinde tutulmasını lanetler. R.H.A, Devrimci hareketin, sosyalizm ve yüce komünizm mücadelesinin başarıya ulaşması durumunda, teknolojinin özüne uygun, insanlığın yararına ve hizmetinde, kolektif ve özgür bir biçimde kullanılacağı bilinciyle hareket eder. Nihai hedef komünizm için hiçbir fedakârlıktan kaçınmaz.</li>
+
+                <li>R.H.A bileşeni, Marksizmi birlik için temel kriter, bütün pratiklerine yön veren teorik temel kabul eder. Türkiye ve Dünya devrimi için mücadele eden illegal devrimci Marksist örgütler başta ve öncelikli olmak üzere, enternasyonal proleterya ve ezilen halklarının yararına, teknolojik alandaki araştırma-inceleme-geliştirme, savunma ve saldırı örgütüdür. Ve bu ilke gereği, kendi konusunda, enternasyonal proleteryayı birleştirebilecek bütün çabaları gösterir. Aynı zamanda iletişim ve bilişim kollarında emek veren tüm proleter bilinçli hacker'ları, enternasyonal hacker örgütümüz <span class="hl">Red Hackers Block (RHB)</span> altında örgütlemeyi öncelikli görevlerinden kabul eder.</li>
+
+                <li>R.H.A, üyelerini ve halkı her türden milliyetçiliğe ve şovenizme dayalı düşüncelere karşı enternasyonalizm ruhu ile eğiterek, bu tür eğilimlerin gelişmesine asla müsaade etmez.</li>
+
+                <li>R.H.A, <span class="hl">Ulusların Kendi Kaderini Tayin Hakkı (UKKTH)</span> ilkesini kayıtsız, şartsız, koşulsuz kabul eder. Her türlü milli imtiyaz ve üstünlüğe karşı çıkar, tüm milliyetlerin tam hak eşitliğini savunur.</li>
+
+                <li>R.H.A, yürüttüğü mücadele platformu olarak, iletişim ve bilişim teknolojilerini esas, diğer teknolojik platformları tali görür. R.H.A, bu mücadele biçiminde, illegal mücadeleyi esas, diğer mücadele biçimlerini tali görür. R.H.A, ülkemizdeki objektif koşulların dayatmasının neticesinde, tüm örgütlenmelerini illegal olarak yapma stratejisini benimser.</li>
+
+                <li>R.H.A, kendi içinde gönüllü birlikteliğe dayanan bir dijital örgüttür. Demokratik merkeziyetçilik esaslarına göre tüm üyeleri için geçerli, bilinçli ve koşulları göz ardı etmeyen devrimci disiplin hüküm sürer. <span class="hl">Eleştiri ve öz-eleştiri</span>yi gelişimin en önemli şartlarından biri kabul eder. Devrimci sorumluluklarından ve felsefesinden, irade ve eylem birliğinden doğan gücünü zayıflatan ve R.H.A'yı yıkmayı amaçlayan hiziplerin varlığına asla müsaade etmez. Her türden oportünizme karşı kararlılıkla mücadele eder. Sınıf mücadelesinin sadece dışarıda olduğunu reddeder; bu mücadelenin yansıması olan sapmalarla mücadeleyi elden bırakmaz. Burjuvazinin sadece dıştan değil, içten de saldırabileceğini ve R.H.A'yı türlü oyunlarla tasfiye etmeye çalışacağının bilinciyle hareket eder. Proleter devrimci kültürü, egemen yoz kültüre karşı içte ve dışta tutarlı ve kararlı bir şekilde savunur, geliştirir ve yayar.</li>
+
+                <li>R.H.A, görev olarak; Devrimci hareketin subjektif koşullarını güçlendirmenin yanı sıra, devrimin objektif koşullarında, yönetenle yönetilen arasındaki çelişkiyi gerçekleri rehber alarak derinleştirmek; devrimci hareketin gündemini yönetilenlere taşıyarak, halkların gerçekleri öğrenmesini sağlayarak objektif şartların daha da olgunlaşmasını sağlamaktır.</li>
+
+                <li>R.H.A, diyalektik materyalizm ile yorumladığı teknoloji kavramında, incelemesini yaptığı <span class="hl">« yeni teknolojiler »</span> ve ayakları havada kalan <span class="hl">« özgür ve açık yazılım »</span> felsefesini bir netliğe oturtarak <span class="red">« halk için hack »</span> sentezine varmış; yani <span class="red">REDHACK (Kızıl Hack)</span> sentezine ulaşmıştır. REDHACK felsefesi, her türden amaçsız, bilinçsiz teknoloji kullanımı ve düşmanlığına, hack eylemi ve oluşumuna karşı çıkar. Tüm olanaklarını « halk için hack » kavramına göre şekillendirir. Hacker'ların veya hacker gruplarının halk yararına pratik sergilemeyenlerini bilinçlendirmeye çalışırken; burjuvazi yararına kurulmuş ve devrimci olanakları yok etmeye çalışan, saldırgan faşist kontra hareket ve örgütlenmelere izin vermez. R.H.A, devrimcilerin olanaklarına karşı yapılan herhangi bir saldırıyı kendine kabul eder; saldırıya karşı savunma ve saldırı siyaseti izler. WhiteHack (beyaz hack), BlackHack (siyah hack) vb. gibi sistemin yedeği, egemenlerin popülist oyuncağı hack türlerine; sistemin karşısında, ezilenlerin yanında olan bilinçli hack felsefesi REDHACK felsefesiyle cevap verir. Bu felsefenin, bilişimcileri, iletişimcileri ve hacker'ları özgür, eşit, adil bir dünyaya götürecek yegâne felsefe olduğunu ilan eder. Hacker'lığın özüne uygun davranmaları için, tüm hacker'ları bu felsefe etrafında örgütlenmeye davet eder.</li>
+
+                <li>R.H.A, hiçbir örgüte bağımlı olmamakla beraber örgütleri birleştirmek gibi maceracı ve idealist mantıkta değildir. R.H.A, aynıların ve ayrıların nedenlerinden çok, somut gerçeklikle ve eylem birlikleriyle ilgilenir; var olan devrimcileri dayanışma kültürüne göre değerlendirir.</li>
+
+                <li>R.H.A, Türkiye Devrimci Hareketi başta olmak üzere, Enternasyonal Devrimci Harekete her türlü olanaklarını sağlayarak, onların düşmanla olan savaşımında teknolojik gelişimi için elinden geleni yapar. R.H.A, devrimcilerin yüce komünizm hedefine ulaşmaları için, kendi alanında hiçbir fedakârlıktan kaçınmaz. R.H.A, yüce komünizm davasında, sonuna kadar devrimcilerin bu alandaki örgütü olacağını ve hiçbir fedakârlıktan kaçınmayacağını ilan eder.</li>
+
+            </ol>
+
+            <!-- REDHACK NEDEN VAR? -->
+            <h3><span class="num">&gt;</span> RedHack Neden Var?</h3>
+
+            <p><em>2005 yılında yayınlanan bir bildirimizi güncelliğinden kaynaklı yeniden yayınlıyoruz...</em></p>
+
+            <p>1997'de kurulduk ve tekrar bu isimle sizlere seslenebileceğimiz belki de bizim için bir hayaldi. Ve şimdi kısıtlı imkânlarla kurduğumuz REDHACK, yeniden ve elbette ki amatör ruh, profesyonel çalışma tarzıyla sizlerle. Sizlere; yani bizimle gönül beraberliği içinde olan, bizlere imkânlarını sağlayıp bizi destekleyen herkese sımsıcak, asi ve yeniden <span class="red">kızıl merhabalar</span>.. Bugün bu satırları yazmak, sizinle tekrardan buluşmak bizim heyecanlanmamız için yeterli bir sebepti. 1 Mayıs'tan bu yana kırdığımız birçok site, konu olduğumuz basın, zaten gelişimizin habercisiydi :)</p>
+
+            <p>Emperyalist-kapitalist sistem büyük bir buhran içindedir. Süregelen krizlerini yok edememekte, sadece <span class="hl">"kontrol"</span> edebilme boyutunda çaba sarf etmektedir. Ellerinde bulundurdukları "subjektif olanakları"nı bizlerin, yani hak eden emekçilerin üzerinde bir baskı, bir hegemonya kurabilmenin aracı olarak kullanmaktadırlar. Bu araçlardan biri de <span class="red">"teknoloji"</span>dir. Teknoloji, objektif olarak —ilerlemesinden kaynaklı— devrimci olmasına rağmen; egemenlerin elinde karşı-devrime hizmette bir aracı olarak kullanılmaktadır. Teknolojiyi, kapitalist-emperyalist sistemin kendi doğası gereği "kâr hırsı"nın bir parçası olarak bizlere karşı yöneltmektedir.</p>
+
+            <p>Ellerinde bulundurdukları "4. kuvvetler"i, "medya" ile emekçilere karşı uyguladıkları savaşta psikolojik boyutu da hesaba katarak yol almaya çalışmaktadırlar. Onlara göre ideolojiler ölmüş, sınıflar bitmiş ve her şey para olmuştur. Bu masalı, ellerinde bulundurdukları medya, basın yayın araçlarıyla yaymaktadırlar. Bu masalla halkımızı, halkları uyutmaya çalışmakta; dahası ülkemiz halkının büyük bir bölümü de bu masala inanıp, var olan haksızlıklara boyun eğmeye zorlanmışlardır. Finans kapitalin en vahşi diktatörlüğünde yaşayan halklar, bizim halkımız gibi elbette ki bu baskıyı daha da yakından görmüşlerdir.</p>
+
+            <p>İşte tam da bu baskıların olduğu bir ortamda, bu baskıların; egemenlerin "kâr hırsı" etrafında kullandıkları "internet ve bilgisayar" ortamına da yansıması kaçınılmazdı. Muhalif fikirler susturulmalı, muhalif düşünceler yok edilmeliydi. Parasız yazılım, açık kod, lisansı kamuya ait sistemler, kapitalizmin doğasına aykırıydı. Onlara göre her şey para olmalıydı. Para babası Microsoft, en az petrol şirketleri gibi tehlikeliydi. Üstelik bizim gibi ülkelerde de IMF tepedeydi. Üstelik World Bank ve IMF gibi kurumlar, verdikleri borçlarla ülkeyi bağımlı; yani yarı-yeni-sömürge yapıyorlardı. Verdikleri borçlarla bağımlı kıldıkları ülkemizden istedikleri an Irak'taki kardeşlerimize bomba yağdırıyor, istedikleri an insanları F tiplerine atıyorlardı. İnsan hakları deyip yürüyüşlerde insanları "cami duvarında" panzerle ezmeye kadar götürüyorlardı.</p>
+
+            <p>Net ortamında da bunun benzeri oluyor; "devrimci-demokrat" sitelere, forumlara git gide saldırılar artıyor, yükselen milliyetçilik çoğu "hacker" arkadaşı esir alıyor, onlara Yunan sitelerini kırıp bayrak dikmenin "ülkeyi kurtarmak" olduğu gibi bir saçmalığı empoze ediyorlardı. Bu süreç ve bu gibi süreçler, tüm baskılara rağmen REDHACK'in 1997'nin Mayıs ayında gözlerini dünyaya açmasına yol açtı..</p>
+
+            <span class="quote">
+                "Bu bir 'efsane.' 'Kahramanı Yu Kung adındaki ihtiyar. Yu Kung bir gün evinin önündeki koca dağı devirmek ister. Ve kazmaya başlar. Komşuları, ihtiyarla alay ederler. 'Koca dağ yok edilir mi' diye. Yu Kung, komşularına şöyle der: — Dağ büyüyecek değil ya... Yeter ki ben, çocuklarım, çocuklarımın çocukları dağı yerle bir etmekten yılmayalım."
+            </span>
+
+            <p>İşte Mao'nun, Yenan'da, parti okulunda söylemiş olduğu bu cümleler; bizleri ve amaçlarımızı aslında apaçık gözler önüne sermektedir. RedHack, kuruluşundan bugüne halkın yanında olmaya ve karşımızda olan "zenginlerin" sistemini, "burjuvazinin diktatorya"sını bu alanda da tesir ve tecrit etmeye çalışmıştır. 97 yılında iki coder ile başladığımız bu serüven, bugün 8 yıldır süren mücadelemizde onlarca coder, onlarca security uzmanını bünyemizde barındırarak devam etmiştir. 1997'den bu yana birçok baskı görmemize, birçok tehdit almamıza, birçok soruşturma-koğuşturmaya rağmen REDHACK olarak bugün de yine dimdik ayakta ve halkın yanındayız. İdeolojimizden, hayat görüşümüzden, birbirimize sunduğumuz bağlılık ve kardeşlik ilişkisinden hiçbir zaman taviz vermeden bugün de yine varız ve yarın da olacağız.</p>
+
+            <p>Dünyadaki hacker'ları bu felsefe ve çatı altında bir araya getirip sistem ve düzen içinden çekip çıkarmak görevlerimiz arasındadır. Büyük bir birlik kurup bu "karmaşıklığa" son verip felsefemiz ışığında sağlam bir temelde ve kolektif işler yapmak, dünyayı sallamak hayallerimiz arasındadır. Örgütlere bağlı olmamakla beraber tek bağımız devrimci-demokratlar ve onların da bağlı oldukları cefakâr halkımız, dünya halklarıdır. Hiçbir örgüte bağımlı olmamak demek tabii ki hocacı, maocu, stalinici, anarşist demeden "illegal"i esas, diğer mücadele biçimlerini tali yapmış tüm "muhalif radikal devrimci"leri savunmak demektir. Ve tabii ki dünya halklarının sesini burada da yükseltmenin yolu, enternasyonal bir hacker birliğidir. Bu amaçla Türkiye ve Dünyadaki gerçek "hacker" dostlarımızı bizimle kontak kurmaya davet ediyoruz. Ne demiştik? Her şey öğrenmek ve öğretmek içindi ve her şey kolektif, samimi, dürüstçe ve büyük bir mücadele içindi..</p>
+
+            <p>Bugüne kadar bizlere, REDHACK'e, "hack" kültürünün gelişimine emek vermiş eski dostlarımızı, grup üyelerimizi, şu an hukuki problemleriyle aramızda bulunmayan 2 arkadaşımızı ve yüzlerce taraftarımızı her zaman kalbimizde, bilinçlerimizde sakladığımızı bilmelerini isteriz. Sizlerin huzurunda bu değerlerimize, geçmişte bize emek veren tüm üyelerimize ve taraftarlarımıza teşekkür ediyoruz. Emekleri, emeklerimizdir. Popülist hack kültüründen uzak; hack felsefesini, analiz-sentez bağlamında, çelişkilerini de ele alarak, özgür yazılım felsefesi senteziyle algılayan bizler; ne amaçsız, sadece "yıkım" için olan hack'ten yanayız, ne de insanlara "şirinlik" olarak yapılan hack'ten yanayız.</p>
+
+            <p>Elbette ki ne de "ülkenin çıkarları" adı altında "davs-cgi-php" açıklarıyla, Yunanlı kardeşlerimize kin kusarak insanlık dışı olmaktan yanayız. Biz, halkların kardeş olduğuna ve "hack"in kendine has entelektüelliği ve open source ilkeleri gereği sistem karşıtlığı diyebileceğimiz bir kültürü olduğuna ve bu kültürün de "sistemin dayatmalarına" karşı olmakla eş değer olduğuna inanmaktayız. Bizler, "Kurtlar Vadisi" mitomanisini seyredip, depresyondaki EGM'nin "aptal" dergisi aracılığıyla demokratlara karşı saldırın emrine uyup, kardeşlerimize saldıran "şovenist" unsurlardan sıyrılmış bir takımız. Ve bu takım yaşamaya ve üretmeye mahkûmdur.</p>
+
+            <p>Sizler, mücadelemizin bireyleri; sizlerden isteğimiz, kendinizi bu alanda da yetiştirmeniz ve bize destek sunmanızdır. Sizlerden isteğimiz, bizleri bu alanda yalnız bırakmayıp her alanda "gerici fikirlere" karşı bizle olup bizleri desteklemenizdir. Sizlerden isteğimiz, insanca bir dünya yaratma mücadelesinde, "sanalda ve reelde" her alanda kapitalizmi, emperyalizmi, faşizmi, şovenizmi ve her türden gericiliği mahkûm etmenizdir. Ve sizlerden istediğimiz bir şey de, olanaklarınız ölçüsünde bizlere yardımcı olmanızdır. REDHACK yaşayan bir organizmadır ve bu organizma fikirler-hareketler ekseninde büyür, çoğalır. Bize sunacağınız parasal olmayan her destek (olanaksal, yetenetsel) bizleri zafere daha da yaklaştıracaktır. Unutmayalım ki; umut, emek verdikçe büyür ve çoğalır; ve umudu yaratacak olanlar hak edenlerdir, teoriyle-pratiği birleştirenlerdir. Desteklerinizi bekliyoruz..</p>
+
+            <p><em>P.S: Sayfamızda şu an bazı yerler, örneğin REDZINE tasarım aşamasındadır. Daha önceleri takip edenler bileceklerdir; REDZINE, REDHACK'in Elektronik Hack dergisidir. Kısa zaman sonra REDZINE'yi ve onun bünyesinde oluşturulacak REDFORUM'u hizmetinize sunacağız. Program bölümümüzü kaybetmemizden kaynaklı tarafımızca yazılmış yeni birkaç işinize yarayacak program koyduk; daha sonraki süreçte arşivimizi yeni programlarla geliştireceğiz.</em></p>
+
+            <p>RedHackers olarak, yani tüm REDHACK üyeleri olarak gönül dolusu selam ve sevgi gönderiyoruz.</p>
+
+            <!-- KAPANIŞ -->
+            <div class="signoff">
+                <p>Her şey illegal :]</p>
+                <p class="red-line">Emperyalizm kâğıttan kâplandır.</p>
+                <p class="sig-line">Red Hackers Association / REDHACK — 1997</p>
+            </div>
+
+        </section>
+        <!-- ============================================= -->
+        <!-- ===== /REDHACK NEDEN HACKLER? BÖLÜMÜ ===== -->
+        <!-- ============================================= -->
 
         <nav class="page-nav" aria-label="Alt sayfa navigasyonu">
             <a href="../index.html" class="back-link">&lt;&lt; ANA SAYFA</a>
