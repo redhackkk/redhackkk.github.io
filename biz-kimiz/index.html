@@ -3,103 +3,362 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BİZ KİMİZ? - REDHACK</title>
+    <title>Biz Kimiz? — RedHack</title>
+    <meta name="description" content="RedHack kurgusal kolektifinin manifestosu ve kimliği.">
+    <meta name="theme-color" content="#ff0000">
+    <link rel="icon" type="image/jpeg" href="../ge.jpg">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --red: #ff0000;
+            --red-dim: #dd0000;
+            --red-dark: #770000;
+            --bg: #000000;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html, body { height: 100%; }
+
         body {
-            background-color: #000000;
-            color: #ff0000;
+            background-color: var(--bg);
+            color: var(--red);
             font-family: "Courier New", Courier, monospace;
             padding: 40px 20px;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             min-height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        #starsCanvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                to bottom,
+                rgba(255, 0, 0, 0.03) 0px,
+                rgba(255, 0, 0, 0.03) 1px,
+                transparent 1px,
+                transparent 3px
+            );
+            mix-blend-mode: screen;
         }
 
         .container {
-            max-width: 800px;
+            position: relative;
+            z-index: 2;
+            max-width: 820px;
             width: 100%;
-            border: 1px solid #ff0000;
-            padding: 35px;
-            background-color: #050505;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+            border: 1px solid var(--red);
+            padding: 35px 40px;
+            background-color: rgba(5, 5, 5, 0.85);
+            box-shadow:
+                0 0 20px rgba(255, 0, 0, 0.4),
+                inset 0 0 40px rgba(255, 0, 0, 0.05);
+            backdrop-filter: blur(2px);
         }
+
+        .corner {
+            position: absolute;
+            color: var(--red);
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-shadow: 0 0 8px var(--red);
+            pointer-events: none;
+            user-select: none;
+        }
+        .corner.tl { top: 4px; left: 8px; }
+        .corner.tr { top: 4px; right: 8px; }
+        .corner.bl { bottom: 4px; left: 8px; }
+        .corner.br { bottom: 4px; right: 8px; }
 
         h1 {
             font-size: 2rem;
-            color: #ff0000;
-            text-shadow: 0 0 10px #ff0000;
+            color: var(--red);
+            text-shadow: 0 0 10px var(--red);
             margin-bottom: 25px;
-            border-bottom: 1px dashed #ff0000;
-            padding-bottom: 10px;
-            letter-spacing: 2px;
+            border-bottom: 1px dashed var(--red);
+            padding-bottom: 12px;
+            letter-spacing: 3px;
+            min-height: 2.4rem;
         }
+
+        .typewriter::after {
+            content: "▊";
+            color: var(--red);
+            animation: blink 1s steps(1) infinite;
+            margin-left: 4px;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
 
         .manifesto-box {
-            border-left: 3px solid #ff0000;
-            padding-left: 15px;
-            margin-bottom: 25px;
+            border-left: 3px solid var(--red);
             background-color: rgba(255, 0, 0, 0.05);
-            padding: 15px;
+            padding: 18px 20px;
+            margin-bottom: 25px;
+        }
+        .manifesto-box p {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: var(--red-dim);
+            margin-bottom: 12px;
+            text-shadow: 0 0 3px #550000;
+        }
+        .manifesto-box p:last-child { margin-bottom: 0; }
+
+        .prompt {
+            color: var(--red);
+            font-weight: bold;
+            text-shadow: 0 0 6px var(--red);
+            margin-right: 4px;
         }
 
-        p {
+        .content p {
             font-size: 1.05rem;
-            line-height: 1.8;
-            color: #dd0000;
-            margin-bottom: 15px;
-            text-shadow: 0 0 3px #550000;
+            line-height: 1.85;
+            color: var(--red-dim);
+            margin-bottom: 16px;
+            text-shadow: 0 0 3px #330000;
         }
 
         .highlight-text {
             color: #ffffff;
             font-weight: bold;
-            background-color: rgba(255, 0, 0, 0.2);
+            background-color: rgba(255, 0, 0, 0.22);
             padding: 2px 6px;
+            text-shadow: 0 0 8px var(--red);
+        }
+
+        .signature {
+            margin-top: 25px;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        .page-nav {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px dashed rgba(255, 0, 0, 0.4);
         }
 
         .back-link {
             display: inline-block;
-            margin-top: 25px;
-            color: #ff0000;
+            color: var(--red);
             text-decoration: none;
-            border: 1px solid #ff0000;
+            border: 1px solid var(--red);
             padding: 8px 16px;
             font-weight: bold;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
             transition: all 0.2s ease;
         }
+        .back-link:hover,
+        .back-link:focus-visible {
+            background-color: var(--red);
+            color: var(--bg);
+            box-shadow: 0 0 15px var(--red);
+            outline: none;
+        }
 
-        .back-link:hover {
-            background-color: #ff0000;
-            color: #000000;
-            box-shadow: 0 0 10px #ff0000;
+        .site-footer {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 0, 0, 0.2);
+            font-size: 0.8rem;
+            color: rgba(255, 0, 0, 0.6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .cursor-blink {
+            animation: blink 1s steps(1) infinite;
+            color: var(--red);
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 20px 12px; }
+            .container { padding: 25px 20px; }
+            h1 { font-size: 1.4rem; letter-spacing: 2px; }
+            .content p, .manifesto-box p { font-size: 0.98rem; }
+            .page-nav { flex-direction: column; }
+            .back-link { text-align: center; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .typewriter::after,
+            .cursor-blink { animation: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>[ BİZ KİMİZ? ]</h1>
-        
-        <div class="manifesto-box">
-            <p>> <strong>Biz zengin sınıf için bir felaketiz. Faşizme inat, yaşasın RedHack!</strong></p>
-            <p>> <strong>Halk için hack. İlk hack beyinde başlar! Hack teorisi olmadan hacking olmaz.</strong></p>
-        </div>
+    <canvas id="starsCanvas" aria-hidden="true"></canvas>
+    <div class="scanlines" aria-hidden="true"></div>
 
-        <p>Bizler; dijital evrenin karanlığında bilginin özgürlüğünü savunan, sansüre ve adaletsizliğe karşı duran anonim bir kolektifiz.</p>
-        
-        <p>Sistemlerin ve sınıfların ötesinde, halkın sesini dijital mecralarda duyurmak için varız.</p>
-        
-        <p><span class="highlight-text">Görünmeziz, her yerdeyiz. Unutmayın, unutturmayacağız!</span></p>
+    <main class="container" role="main">
+        <div class="corner tl">+</div>
+        <div class="corner tr">+</div>
+        <div class="corner bl">+</div>
+        <div class="corner br">+</div>
 
-        <a href="../index.html" class="back-link">&lt;&lt; ANA SAYFAYA DÖN</a>
-    </div>
+        <h1 id="pageTitle" class="typewriter" data-text="[ BİZ KİMİZ? ]"></h1>
 
+        <section class="manifesto-box" aria-label="Manifesto">
+            <p><span class="prompt">&gt;</span> <strong>Biz zengin sınıf için bir felaketiz. Faşizme inat, yaşasın RedHack!</strong></p>
+            <p><span class="prompt">&gt;</span> <strong>Halk için hack. İlk hack beyinde başlar! Hack teorisi olmadan hacking olmaz.</strong></p>
+        </section>
+
+        <article class="content">
+            <p>Bizler; dijital evrenin karanlığında bilginin özgürlüğünü savunan, sansüre ve adaletsizliğe karşı duran <span class="highlight-text">anonim bir kolektifiz</span>.</p>
+
+            <p>Sistemlerin ve sınıfların ötesinde, halkın sesini dijital mecralarda duyurmak için varız.</p>
+
+            <p>Kod bizim dilimiz, ağ bizim sokaklarımız. Her paket bir mesaj, her log bir tanıklıktır.</p>
+
+            <p class="signature"><span class="highlight-text">Görünmeziz, her yerdeyiz. Unutmayın, unutturmayacağız!</span></p>
+        </article>
+
+        <nav class="page-nav" aria-label="Alt sayfa navigasyonu">
+            <a href="../index.html" class="back-link">&lt;&lt; ANA SAYFA</a>
+            <a href="../foto-galeri/index.html" class="back-link">FOTO GALERİ &gt;&gt;</a>
+        </nav>
+
+        <footer class="site-footer">
+            <span>// RedHack — kurgusal bir sanat projesidir.</span>
+            <span class="cursor-blink">_</span>
+        </footer>
+    </main>
+
+    <script>
+    (function () {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // ===== CANVAS YILDIZ ANİMASYONU =====
+        const canvas = document.getElementById('starsCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+        let numStars = 0;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            numStars = Math.min(200, Math.floor((canvas.width * canvas.height) / 12000));
+        }
+
+        function drawFivePointStar(cx, cy, spikes, outerRadius, innerRadius, alpha) {
+            let rot = Math.PI / 2 * 3;
+            let x = cx, y = cy;
+            const step = Math.PI / spikes;
+
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(cx, cy - outerRadius);
+            for (let i = 0; i < spikes; i++) {
+                x = cx + Math.cos(rot) * outerRadius;
+                y = cy + Math.sin(rot) * outerRadius;
+                ctx.lineTo(x, y);
+                rot += step;
+
+                x = cx + Math.cos(rot) * innerRadius;
+                y = cy + Math.sin(rot) * innerRadius;
+                ctx.lineTo(x, y);
+                rot += step;
+            }
+            ctx.lineTo(cx, cy - outerRadius);
+            ctx.closePath();
+            ctx.fillStyle = `rgba(255, 0, 0, ${alpha})`;
+            ctx.shadowBlur = 12;
+            ctx.shadowColor = '#ff0000';
+            ctx.fill();
+            ctx.restore();
+        }
+
+        class Star {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.outerRadius = Math.random() * 5 + 3;
+                this.innerRadius = this.outerRadius / 2;
+                this.alpha = Math.random();
+                this.speed = Math.random() * 0.02 + 0.005;
+                this.increasing = Math.random() > 0.5;
+            }
+            draw() {
+                drawFivePointStar(ctx, this.x, this.y, 5, this.outerRadius, this.innerRadius, this.alpha);
+            }
+            update() {
+                if (this.increasing) {
+                    this.alpha += this.speed;
+                    if (this.alpha >= 1) this.increasing = false;
+                } else {
+                    this.alpha -= this.speed;
+                    if (this.alpha <= 0.05) this.increasing = true;
+                }
+            }
+        }
+
+        function initStars() {
+            stars = [];
+            for (let i = 0; i < numStars; i++) stars.push(new Star());
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const s of stars) { s.update(); s.draw(); }
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', () => { resizeCanvas(); initStars(); });
+        resizeCanvas();
+        initStars();
+
+        if (reduced) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(s => s.draw());
+        } else {
+            animate();
+        }
+
+        // ===== TYPEWRITER BAŞLIK =====
+        const title = document.querySelector('.typewriter');
+        if (title) {
+            const text = title.dataset.text || title.textContent;
+            title.textContent = '';
+            if (reduced) {
+                title.textContent = text;
+            } else {
+                let i = 0;
+                const tick = () => {
+                    if (i <= text.length) {
+                        title.textContent = text.slice(0, i);
+                        i++;
+                        setTimeout(tick, 60);
+                    }
+                };
+                tick();
+            }
+        }
+    })();
+    </script>
 </body>
 </html>
