@@ -248,6 +248,137 @@
 
         .menu-item:focus-visible { outline: none; }
 
+        /* ===== SORU & CEVAP ===== */
+        .faq-section {
+            width: 100%;
+            margin-top: 55px;
+        }
+
+        .faq-title {
+            font-size: 1.5rem;
+            color: var(--yellow);
+            letter-spacing: 4px;
+            text-align: center;
+            margin-bottom: 8px;
+            text-shadow: 0 0 12px rgba(255, 212, 0, 0.7);
+        }
+
+        .faq-subtitle {
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(245, 245, 245, 0.5);
+            letter-spacing: 2px;
+            margin-bottom: 28px;
+        }
+
+        .faq-subtitle .green {
+            color: var(--green);
+            text-shadow: 0 0 6px var(--green);
+        }
+
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .faq-item {
+            border: 1px solid rgba(225, 6, 0, 0.5);
+            background-color: rgba(20, 0, 0, 0.7);
+            transition: border-color 0.25s, box-shadow 0.25s;
+        }
+
+        .faq-item[open] {
+            border-color: var(--yellow);
+            box-shadow: 0 0 20px rgba(255, 212, 0, 0.25);
+        }
+
+        .faq-item summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 16px 20px;
+            font-size: 1.02rem;
+            font-weight: bold;
+            color: var(--white);
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            user-select: none;
+            transition: color 0.2s, background-color 0.2s;
+        }
+
+        .faq-item summary::-webkit-details-marker { display: none; }
+
+        .faq-item summary::before {
+            content: "+";
+            color: var(--green);
+            font-weight: bold;
+            font-size: 1.3rem;
+            width: 20px;
+            text-align: center;
+            text-shadow: 0 0 8px var(--green);
+            transition: transform 0.25s, color 0.25s;
+            flex-shrink: 0;
+        }
+
+        .faq-item[open] summary::before {
+            content: "−";
+            color: var(--yellow);
+            text-shadow: 0 0 8px var(--yellow);
+        }
+
+        .faq-item summary:hover,
+        .faq-item summary:focus-visible {
+            background-color: rgba(225, 6, 0, 0.1);
+            color: var(--yellow);
+            outline: none;
+        }
+
+        .faq-answer {
+            padding: 4px 20px 20px 52px;
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: rgba(245, 245, 245, 0.85);
+            border-top: 1px dashed rgba(255, 212, 0, 0.25);
+            margin-top: 4px;
+            padding-top: 18px;
+            text-shadow: 0 0 3px rgba(225, 6, 0, 0.4);
+        }
+
+        .faq-answer p {
+            margin-bottom: 14px;
+        }
+
+        .faq-answer p:last-child { margin-bottom: 0; }
+
+        .faq-answer .hl {
+            color: var(--yellow);
+            font-weight: bold;
+            text-shadow: 0 0 6px rgba(255, 212, 0, 0.6);
+        }
+
+        .faq-answer .red {
+            color: var(--red-bright);
+            font-weight: bold;
+            text-shadow: 0 0 6px var(--red);
+        }
+
+        .faq-answer .green {
+            color: var(--green);
+            font-weight: bold;
+            text-shadow: 0 0 6px var(--green);
+        }
+
+        .faq-answer .quote {
+            display: block;
+            border-left: 3px solid var(--green);
+            padding: 6px 0 6px 14px;
+            margin: 12px 0;
+            color: rgba(255, 212, 0, 0.9);
+            font-style: italic;
+        }
+
         /* ===== FOOTER ===== */
         .site-footer {
             margin-top: 50px;
@@ -283,6 +414,9 @@
             .slogan { font-size: 1rem; }
             .top-menu { gap: 14px; }
             .menu-item { flex: 1 1 140px; max-width: 100%; }
+            .faq-title { font-size: 1.15rem; letter-spacing: 3px; }
+            .faq-item summary { font-size: 0.95rem; padding: 14px 14px; }
+            .faq-answer { padding: 14px 14px 16px 40px; font-size: 0.92rem; }
             .site-footer { flex-direction: column; text-align: center; }
         }
 
@@ -334,6 +468,88 @@
             </a>
         </nav>
 
+        <!-- ===== SORU & CEVAP ===== -->
+        <section class="faq-section" aria-label="Sıkça sorulan sorular">
+            <h2 class="faq-title">[ SORULAR ve CEVAPLAR ]</h2>
+            <div class="faq-subtitle"><span class="green">&gt;</span> sık sorulanlar <span class="green">&lt;</span></div>
+
+            <div class="faq-list">
+
+                <!-- SORU 1 -->
+                <details class="faq-item">
+                    <summary>RedHack kaç yılında ve neden kurulmuştur?</summary>
+                    <div class="faq-answer">
+                        <p>R.H.A (Red Hackers Association) yani <span class="red">REDHACK</span> <span class="hl">1997 Mayıs</span>'ında kurulmuştur.</p>
+
+                        <p>Kuruluşundaki mantık; somut koşulların somut tahlili ilkesinden yola çıkan, teknoloji sektörünün bilişim ve iletişim kollarında alın teri döken yoldaşlar tarafından Türkiye'de kurulmuştur. Eylemlerine yön verecek esas merkez Türkiye olmak üzere esas görevi, Türkiye Devrimci Hareketine devrimin bu alanında yardımcı olabilmek; Türkiye ve dünya proleteryasına ve de ezilen halklara bir nebze de olsa dayanışma gösterebilmektir.</p>
+
+                        <p>Bu düşünceyle yola çıkan R.H.A, dünyaya bakış anahtarı <span class="hl">Diyalektik Materyalizm</span> ile, başta açık ve özgür kod olmak üzere birçok teknolojik yeniliği analiz ederek, bu alandaki savaşın yönteminin adını REDHACK olarak koymuş, REDHACK sentezine varmıştır.</p>
+
+                        <p>REDHACK felsefesi; ezenle ezilenler arasındaki savaşın, gelişen teknolojik kulvarlarda ezilenler lehine kullanılmasının, geliştirilmesinin adı ve mantığıdır. R.H.A'ya rehberlik eden, ezilen sınıf ve halkların ortak ideolojisinin bu alana yansımasıyla şekillenen REDHACK felsefesidir. Bu felsefe, Marksist diyalektiğin bu alanı yorumlamasından başka bir şey değildir.</p>
+
+                        <p>Daha geniş bilgi için tüzüğümüzü okuyunuz.</p>
+                    </div>
+                </details>
+
+                <!-- SORU 2 -->
+                <details class="faq-item">
+                    <summary>RedHack üyeleri kimlerdir? Nerede yaşarlar? İsimleri yok mudur?</summary>
+                    <div class="faq-answer">
+                        <p>Yaptığımız işin ciddiyetinden ve düşmanımızın faşizmin en kanlı diktatörlüklerinden biri olması neticesinde; ayrıca hacker etiğinin genel prensiplerine ve gerçek hacker yaşayış biçimine göre (tüzüğümüzde de kesin olarak belirtilmiş, yasaklanmış bir şekilde) <span class="red">isim, yer, yaş hatta cinsiyet</span> noktasında bile bilgi veremiyoruz.</p>
+
+                        <p>Dahası grup üyelerimizin birbiri ile bu şekilde bir bilgi alışverişi de tüzüğümüzce kesin kurallarla yasaklanmıştır. Ayrıca RedHack, hiçbir mücadele biçimini reddetmemekle beraber, <span class="hl">illegal mücadeleyi esas</span>, diğer mücadele biçimlerini tali görmektedir. Örgütlenme ilkeleri ve bu örgütlenmedeki yaşayış şeklini de objektif olarak bu kurala göre belirler. <span class="quote">(bkz: her şey illegal)</span></p>
+                    </div>
+                </details>
+
+                <!-- SORU 3 -->
+                <details class="faq-item">
+                    <summary>RedHack üyeleri reel'de görüşür mü?</summary>
+                    <div class="faq-answer">
+                        <p>Reel'de bir irtibat, normal koşullarda <span class="red">kesinlikle yapılmaz</span>.</p>
+                    </div>
+                </details>
+
+                <!-- SORU 4 -->
+                <details class="faq-item">
+                    <summary>Sadece site mi kırarsınız? Yoksa...?</summary>
+                    <div class="faq-answer">
+                        <p>Öncelikle RedHack, <span class="quote">"yürüttüğü mücadele platformu olarak, iletişim ve bilişim teknolojilerini esas, diğer teknolojik platformları tali görür."</span> Buradan da anlaşılacağı gibi RedHack, teknolojinin bütün platformlarında var olmayı savunmakla beraber, iletişim ve bilişim teknolojilerinde <span class="hl">"esas"</span> bir şekilde var olmayı ve mücadele etmeyi öngörür.</p>
+
+                        <p>Buradan çıkan sonuçla RedHack sadece site kırma, index atma vb. türden eylemlerle kendini sınırlamaz. Site deface, yeri geldiğinde işin görsel yanı; propaganda/ajitasyonun bir şekli, yeri geldiğinde de cezalandırmanın bir şekli olabilmektedir. Bu tür hack eylemleri propaganda amaçlı olmasından kaynaklı genelde kamuoyuna açıklanır tarzdadır.</p>
+
+                        <p>Fakat bunun yanında RedHack'in <span class="red">görünmeyen yüzünde</span> başka türden eylem türleri de yapılabilmektedir. Bu tür değişik eylem türlerinin (genelde propaganda amacı taşımadığı için) gerekli görülenleri tarafımızdan kamuoyuna açıklanırken, büyük bir çoğunluğu kamuoyuna açıklanmaz. Tüzüğümüzün son bölümüne doğru <span class="hl">"RedHack'in bölümleri nelerdir?"</span> bölümünü okursanız, RedHack'in deface'den başka neler yaptığını da görebilirsiniz.</p>
+
+                        <p>Hayal gücümüzün ve yeteneklerimizin genişliği kadar, eylemlerimizin yelpazesi de geniştir.</p>
+                    </div>
+                </details>
+
+                <!-- SORU 5 -->
+                <details class="faq-item">
+                    <summary>Sizin de siteniz kırılabilir mi? Kırılırsa nasıl karşılarsınız?</summary>
+                    <div class="faq-answer">
+                        <p>Her sitenin kırılabileceği gibi bizim de sitemiz kırılabilir. Bu noktada saçma bir iddiamız ve gayretimiz yoktur. Bizim işimiz sistemimizi elimizden geldiğince korumak, deface edilmemesine çalışmaktır. Ama buna rağmen sitemiz veya sitelerimiz kırılabilir mi? Bu soruya verilecek cevap tabii ki <span class="green">"Evet"</span>tir.</p>
+
+                        <p>"Tepkimiz ne olur?" sorusuna cevap vermeden, bu tür bir duruma verilecek tepkimizi anlamadan önce, bizim başkalarının sitesini kırdığımız noktada neden kırdığımızı ve tepkimizi anlamak gerekir. Şöyle ki;</p>
+
+                        <p>Bizler site kırma <span class="hl">"deface"</span> olayını birilerini alt etme, büyüklük taslama vb. gibi küçük burjuva, lumpence amaçlarla yapmayız. Bizi az buçuk bilen biri; ideolojik olarak, halkımız için, halktan yana, çeşitli koşullar altında <span class="quote">"bildiri" ve "saldırı"</span> türü deface yaptığımızı bilir. (Bu noktada "RedHack Kimdir?" bölümünde detaylı bilgileri bulabilirsiniz.)</p>
+
+                        <p>Dolayısıyla buradan çıkan sonuç nedir? Demek ki bizler hack ve deface olayına <span class="red">ideolojik</span> bakmaktayız. Bir sayfayı kırmak önemli değil; sayfayı <span class="hl">nasıl, neden, niçin</span> kırdığımız önemlidir!</p>
+
+                        <p>Ve bunu bizim sayfamızın kırılması olayına uyarlarsak: Bizim için sayfamızın kırılması önemli değil (çünkü her sistem kırılır!), önemli olan nasıl, neden, niçin kırıldığıdır. Esas olanın "Neden/Niçin Kırıldığı" olmasına karşın, "Nasıl Kırıldığı" da önemlidir.</p>
+
+                        <p>Açacak olursak;</p>
+
+                        <p><span class="hl">Nasıl</span> derken: Acaba sahtekârca bir yöntemle mi kırılmıştır? (kimileri buna sistem mühendisliği demekte) Host tarafından bir kaypaklık var mıdır vb. lamerliklerle mi kırılmıştır?</p>
+
+                        <p><span class="hl">Neden ve Niçin</span> derken: Sayfamızı kıranların haklılık nedenleri ne derecedir? Ezilen halka ne derece bir faydası dokunmuştur? Halk düşmanlarına ne derece bir faydası dokunmuştur? Kıranların hayata bakış açısı, sınıfsal duruşu nedir ve bunu kırdıkları sayfamıza yansıtmışlar mıdır? Kırdıkları sayfamızda ana sayfamıza yazı yazmaktan başka ne başarmışlardır? vb. birçok taraftan etraflıca bakarız ve ona göre bir siyaset izler, tepki gösteririz.</p>
+
+                        <p>Bakış tarzımız çok farklı görünebilir ama bu aslında gerçek hacker felsefesi için doğru olandır.</p>
+                    </div>
+                </details>
+
+            </div>
+        </section>
+
         <!-- FOOTER -->
         <footer class="site-footer">
             <span><span class="green">&gt;</span> RedHack</span>
@@ -353,7 +569,8 @@
         const routes = [
             { keys: ['kim', 'biz', 'manifesto', 'hakkında', 'hakkinda', 'kimiz'], url: 'biz-kimiz/index.html' },
             { keys: ['foto', 'galeri', 'resim', 'görsel', 'gorsel'], url: 'foto-galeri/index.html' },
-            { keys: ['hack', 'site', 'log', '404', 'hacklenen'], url: 'hacklenen-siteler/index.html' }
+            { keys: ['hack', 'site', 'log', '404', 'hacklenen'], url: 'hacklenen-siteler/index.html' },
+            { keys: ['soru', 'cevap', 'sss', 'faq', 'neden', 'nasıl', 'nasil'], url: '#faq' }
         ];
 
         searchForm.addEventListener('submit', (e) => {
@@ -363,7 +580,11 @@
             const words = raw.split(/\s+/);
             const match = routes.find(r => words.some(w => r.keys.includes(w)));
             if (match) {
-                window.location.href = match.url;
+                if (match.url === '#faq') {
+                    document.querySelector('.faq-section').scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    window.location.href = match.url;
+                }
             } else {
                 showTerminalMessage(`Sonuç bulunamadı: "${raw}"`);
             }
@@ -497,6 +718,18 @@
         } else {
             animate();
         }
+
+        // ===== AÇILINCA DİĞERLERİNİ KAPAT (akordeon) =====
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            item.addEventListener('toggle', () => {
+                if (item.open) {
+                    faqItems.forEach(other => {
+                        if (other !== item) other.open = false;
+                    });
+                }
+            });
+        });
     })();
     </script>
 </body>
